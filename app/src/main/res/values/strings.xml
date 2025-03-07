@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Hot M@vies</string>
+    <string name="userName">User Name</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="app_description">Browse fresh trending movies from around the world.</string>
+    <string name="dialog_info_title">Info</string>
+    <string name="dialog_action_retry">Retry</string>
+    <string name="my_overview">I am a devoted Android and iOS developer who enjoys good movies.</string>
+    <string name="dialog_msg_are_you_sure_to_logout">Are you sure to logout?</string>
+    <string name="credits_and_attributions">This product uses the TMDB API but is not endorsed or certified by TMDB.\nDue credits for lottie animations in this app: SM Rony, Stephen James.\nCity vector image made by rawpixel from www.freepik.com</string>
+</resources>

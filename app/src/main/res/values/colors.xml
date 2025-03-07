@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@android:color/white</color>
+    <color name="colorPrimaryInverted">@android:color/black</color>
+    <color name="colorPrimaryDarkerMiddle">#888888</color>
+    <color name="colorPrimaryMiddle">@android:color/darker_gray</color>
+</resources>

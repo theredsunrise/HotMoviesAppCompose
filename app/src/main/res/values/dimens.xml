@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="min_height_collapsible_header">64dp</dimen>
+    <dimen name="max_height_collapsible_header">260dp</dimen>
+    <dimen name="movies_info_cut_corner">95dp</dimen>
+    <dimen name="movie_image_height_type_long">200dp</dimen>
+    <dimen name="movie_image_height_type_short">150dp</dimen>
+</resources>
