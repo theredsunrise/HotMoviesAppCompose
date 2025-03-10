@@ -1,17 +1,13 @@
 package com.example.hotmovies.presentation.movies.list.viewModel
 
-import android.content.res.Resources
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.example.hotmovies.R
 import com.example.hotmovies.appplication.DIContainer
-import com.example.hotmovies.domain.User
-import com.example.hotmovies.presentation.movies.dtos.MovieUI
+import com.example.hotmovies.presentation.movies.dtos.MovieUIState
+import com.example.hotmovies.presentation.movies.dtos.UserDetailsUIState
 import com.example.hotmovies.presentation.movies.list.viewModel.MoviesViewModel.Actions.LoadMovies
 import com.example.hotmovies.presentation.movies.list.viewModel.MoviesViewModel.Actions.LoadUserDetails
 import com.example.hotmovies.presentation.movies.list.viewModel.MoviesViewModel.Actions.Logout
@@ -33,33 +29,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
-class MoviesViewModel(diContainer: DIContainer): ViewModel() {
+class MoviesViewModel(diContainer: DIContainer) : ViewModel() {
 
-    @Stable
-    @Immutable
-    data class UserDetailsUIState(
-        val name: String,
-        val userName: String,
-        val overview: String,
-        val avatar: ImageBitmap?,
-    ) {
-        companion object {
-            fun defaultState() = UserDetailsUIState(
-                "",
-                "",
-                "",
-                null
-            )
-
-            fun fromDomain(resources: Resources, user: User): UserDetailsUIState {
-                return UserDetailsUIState(
-                    user.name,
-                    user.userName,
-                    resources.getString(R.string.my_overview),
-                    user.avatar?.let { it.asImageBitmap() })
-            }
-        }
-    }
 
     @Stable
     @Immutable
@@ -87,7 +58,7 @@ class MoviesViewModel(diContainer: DIContainer): ViewModel() {
 
     private var _state = MutableStateFlow(UIState.defaultState())
     val state = _state.asStateFlow()
-    val moviesPagingData: StateFlow<PagingData<MovieUI>> = moviesAction.state
+    val moviesPagingData: StateFlow<PagingData<MovieUIState>> = moviesAction.state
 
     init {
         userDetailsAction.state.onEach { result ->

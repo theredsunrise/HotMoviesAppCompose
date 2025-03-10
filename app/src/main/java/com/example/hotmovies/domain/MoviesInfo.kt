@@ -2,7 +2,7 @@ package com.example.hotmovies.domain
 
 import com.example.hotmovies.domain.base.ValueObject
 
-class MoviesInfo private constructor(
+data class MoviesInfo private constructor(
     val page: Int,
     val results: List<Movie>,
     val totalPages: Int,

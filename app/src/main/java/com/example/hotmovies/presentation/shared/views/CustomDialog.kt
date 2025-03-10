@@ -171,6 +171,25 @@ private fun iconLottie(modifier: Modifier) {
     )
 }
 
+@Composable
+fun showDialog(
+    @StringRes confirmStringId: Int = R.string.dialog_action_retry,
+    @StringRes titleStringId: Int = R.string.dialog_info_title,
+    onCancel: (Any) -> Unit = {}, onConfirm: (Any) -> Unit
+): MutableState<CustomDialogState?> {
+    val dialogState = remember { mutableStateOf<CustomDialogState?>(null) }
+    dialogState.value?.also {
+        CustomDialog(
+            dialogState,
+            confirmStringId,
+            titleStringId,
+            onCancel = onCancel,
+            onConfirm = onConfirm
+        )
+    }
+    return dialogState
+}
+
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable

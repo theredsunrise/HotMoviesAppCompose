@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.flow
 class MockMovieDataRepository(
     private val appContext: Context,
     @DrawableRes private val avatarId: Int,
-    private val checkNetworkConnection: Boolean
+    private val isCheckNetworkConnection: Boolean
 ) :
     MovieDataRepositoryInterface {
 
@@ -60,7 +60,7 @@ class MockMovieDataRepository(
     }
 
     override fun getTrendingMoviesInfo(pageId: Int, itemsPerPage: Int): Flow<MoviesInfo> = flow {
-        if (checkNetworkConnection) {
+        if (isCheckNetworkConnection) {
             if (!NetworkStatusResolver.isNetworkAvailable(appContext)) throw NoNetworkConnectionException()
         }
         val movies = (1..40).map { id ->

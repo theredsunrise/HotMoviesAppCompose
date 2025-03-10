@@ -1,12 +1,9 @@
 package com.example.hotmovies.shared
 
-import android.app.Activity
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Looper
-import android.view.View
 import androidx.paging.LoadState
-import com.example.hotmovies.UserInteractionConfigurableComponent
 import okhttp3.ResponseBody
 import kotlin.experimental.xor
 import kotlin.io.encoding.Base64

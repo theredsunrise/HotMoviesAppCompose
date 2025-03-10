@@ -3,7 +3,7 @@ package com.example.hotmovies.domain
 import com.example.hotmovies.domain.base.Validators
 import com.example.hotmovies.domain.base.ValueObject
 
-class LoginUserName private constructor(val value: String) : ValueObject {
+data class LoginUserName private constructor(val value: String) : ValueObject {
     sealed class Exceptions(msg: String) : Exception(msg) {
         class InvalidInputException(msg: String) : Exceptions(msg)
     }

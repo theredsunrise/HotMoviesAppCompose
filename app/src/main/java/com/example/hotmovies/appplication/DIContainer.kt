@@ -80,6 +80,6 @@ class DIContainer(val appContext: Context) {
     }
 
     val previewMovieDataRepository: MovieDataRepositoryInterface by lazy {
-        MockMovieDataRepository(appContext, R.drawable.spongebob, false)
+        MockMovieDataRepository(appContext, R.drawable.vector_background, false)
     }
 }

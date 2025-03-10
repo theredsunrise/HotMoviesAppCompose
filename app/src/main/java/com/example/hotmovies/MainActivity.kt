@@ -8,20 +8,20 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import androidx.window.core.layout.WindowHeightSizeClass
 import com.example.hotmovies.presentation.login.navigation.LoginGraph
 import com.example.hotmovies.presentation.login.navigation.loginGraph
 import com.example.hotmovies.presentation.movies.navigation.moviesGraph
+import com.example.hotmovies.presentation.shared.LocalSharedTransitionScope
 import com.example.hotmovies.presentation.theme.HotMoviesAppComposeTheme
 
 interface UserInteractionConfigurableComponent {
@@ -59,9 +59,19 @@ class MainActivity : ComponentActivity(), UserInteractionConfigurableComponent {
                 Surface(Modifier.fillMaxSize()) {
                     val navController = rememberNavController()
                     SharedTransitionLayout(Modifier.fillMaxSize()) {
-                        NavHost(navController, startDestination = LoginGraph) {
-                            loginGraph(navController, this@SharedTransitionLayout)
-                            moviesGraph(navController, this@SharedTransitionLayout)
+                        CompositionLocalProvider(
+                            LocalSharedTransitionScope provides this
+                        ) {
+                            NavHost(navController, startDestination = LoginGraph,
+                                enterTransition = { EnterTransition.None },
+                                exitTransition = { ExitTransition.None },
+                                popExitTransition = { ExitTransition.None },
+                                popEnterTransition = { EnterTransition.None }
+                            )
+                            {
+                                loginGraph(navController)
+                                moviesGraph(navController)
+                            }
                         }
                     }
                 }

@@ -1,12 +1,9 @@
 package com.example.hotmovies.domain
 
-import android.os.Parcelable
 import com.example.hotmovies.domain.base.AbstractEntity
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 class Movie private constructor(
-    val idParcelize: Int,
+    id: Int,
     val pageId: Int,
     val backdropPath: String?,
     val title: String,
@@ -18,7 +15,7 @@ class Movie private constructor(
     val releaseDate: String,
     val voteAverage: Double,
     val voteCount: Long
-) : AbstractEntity(idParcelize), Parcelable {
+) : AbstractEntity(id) {
 
     enum class Genre {
         ACTION,
@@ -40,38 +37,6 @@ class Movie private constructor(
         THRILLER,
         WAR,
         WESTERN
-    }
-
-    companion object {
-        operator fun invoke(
-            id: Int,
-            pageId: Int,
-            backdropPath: String?,
-            title: String,
-            originalTitle: String,
-            overview: String,
-            posterPath: String?,
-            genreIds: List<Genre>,
-            popularity: Double,
-            releaseDate: String,
-            voteAverage: Double,
-            voteCount: Long
-        ): Movie {
-            return Movie(
-                id,
-                pageId,
-                backdropPath,
-                title,
-                originalTitle,
-                overview,
-                posterPath,
-                genreIds,
-                popularity,
-                releaseDate,
-                voteAverage,
-                voteCount
-            )
-        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -108,7 +73,39 @@ class Movie private constructor(
         result = 31 * result + popularity.hashCode()
         result = 31 * result + releaseDate.hashCode()
         result = 31 * result + voteAverage.hashCode()
-        result = 31 * result + voteCount.toInt()
+        result = 31 * result + voteCount.hashCode()
         return result
+    }
+
+    companion object {
+        operator fun invoke(
+            id: Int,
+            pageId: Int,
+            backdropPath: String?,
+            title: String,
+            originalTitle: String,
+            overview: String,
+            posterPath: String?,
+            genreIds: List<Genre>,
+            popularity: Double,
+            releaseDate: String,
+            voteAverage: Double,
+            voteCount: Long
+        ): Movie {
+            return Movie(
+                id,
+                pageId,
+                backdropPath,
+                title,
+                originalTitle,
+                overview,
+                posterPath,
+                genreIds,
+                popularity,
+                releaseDate,
+                voteAverage,
+                voteCount
+            )
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.hotmovies.presentation.theme
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
@@ -10,6 +11,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalConfiguration
 import com.example.hotmovies.presentation.shared.AppState
 import com.example.hotmovies.presentation.shared.LocalAppState
+import com.example.hotmovies.presentation.shared.helpers.isBackGestureEnabled
 
 private val LightColorsScheme = lightColorScheme(
     primary = md_theme_light_primary,
@@ -71,9 +73,10 @@ private val DarkColorsScheme = darkColorScheme(
     outline = md_theme_dark_outline
 )
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun HotMoviesAppComposeTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -82,13 +85,19 @@ fun HotMoviesAppComposeTheme(
 //            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
 //        }
 
-        darkTheme -> DarkColorsScheme
+        isDarkTheme -> DarkColorsScheme
         else -> LightColorsScheme
     }
 
     val configuration = LocalConfiguration.current
-    CompositionLocalProvider(LocalAppState provides AppState.createFrom(configuration,
-        currentWindowAdaptiveInfo().windowSizeClass)) {
+    val isBackGestureEnabled = isBackGestureEnabled()
+    CompositionLocalProvider(
+        LocalAppState provides AppState.createFrom(
+            configuration,
+            currentWindowAdaptiveInfo().windowSizeClass,
+            isBackGestureEnabled
+        )
+    ) {
         MaterialTheme(
             colorScheme = colorScheme,
             typography = Typography,
@@ -96,3 +105,4 @@ fun HotMoviesAppComposeTheme(
         )
     }
 }
+

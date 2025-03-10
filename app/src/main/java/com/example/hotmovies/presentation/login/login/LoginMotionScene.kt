@@ -104,7 +104,7 @@ fun LoginMotionScene() = MotionScene(
         start: ['parent', 'start', 20],
         end: ['parent', 'end', 20],
         bottom: ['parent', 'bottom'],
-        width: { value: '26%', min: 100, max: 500 },
+        width: { value: '26%', min: 80, max: 500 },
         height: 'wrap',
       }, 
       indicator: {

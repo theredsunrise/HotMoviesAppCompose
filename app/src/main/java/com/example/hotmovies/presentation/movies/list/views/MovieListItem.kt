@@ -1,6 +1,8 @@
 package com.example.hotmovies.presentation.movies.list.views
 
 import android.content.res.Configuration
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -29,45 +31,56 @@ import coil3.compose.LocalPlatformContext
 import coil3.compose.rememberAsyncImagePainter
 import coil3.compose.rememberConstraintsSizeResolver
 import coil3.request.ImageRequest
-import com.example.hotmovies.presentation.movies.dtos.MovieUI
+import com.example.hotmovies.presentation.movies.dtos.MovieUIState
+import com.example.hotmovies.presentation.shared.helpers.PreviewSharingTransitionScreen
 import com.example.hotmovies.presentation.shared.rememberAnimatedImageState
+import com.example.hotmovies.presentation.shared.safeClickable
 import com.example.hotmovies.presentation.shared.views.AnimatedImage
 import com.example.hotmovies.presentation.shared.views.RatingBar
-import com.example.hotmovies.presentation.theme.HotMoviesAppComposeTheme
+import com.example.hotmovies.shared.Event
 import kotlin.math.roundToInt
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun MovieListItem(
+fun SharedTransitionScope.MovieListItem(
     modifier: Modifier,
     imageHeight: Dp,
-    movie: MovieUI
+    movie: MovieUIState,
+    onLoadSuccess: (movie: MovieUIState) -> Unit,
+    onMovieClick: (movie: MovieUIState) -> Unit
 ) {
+    val sizeResolver = rememberConstraintsSizeResolver()
+    val painter = rememberAsyncImagePainter(
+        ImageRequest.Builder(LocalPlatformContext.current).data(
+            movie.finalBackDropImageUrl
+        ).size(sizeResolver).build(),
+        contentScale = ContentScale.Crop,
+    )
+    val animatedImageState = painter.rememberAnimatedImageState(!movie.isLoaded.hasBeenHandled) {
+        onLoadSuccess(movie)
+    }
+
     val shape = MaterialTheme.shapes.medium
     Column(
         modifier
             .graphicsLayer(clip = true, shape = shape)
             .border(0.5.dp, MaterialTheme.colorScheme.outline, shape)
+            .safeClickable(isEnabled = animatedImageState.value.isSuccess) {
+                onMovieClick(movie)
+            }
             .background(MaterialTheme.colorScheme.secondaryContainer),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-
-        val sizeResolver = rememberConstraintsSizeResolver()
-        val painter = rememberAsyncImagePainter(
-            ImageRequest.Builder(LocalPlatformContext.current).data(
-                movie.backdropUrl ?: movie.posterUrl.orEmpty()
-            ).size(sizeResolver).build(),
-            contentScale = ContentScale.Crop,
-        )
-        val animatedImageState = painter.rememberAnimatedImageState()
 
         AnimatedImage(
             Modifier
                 .fillMaxWidth()
                 .requiredHeight(imageHeight)
                 .then(sizeResolver),
-            animatedImageState
+            animatedImageState,
+            true
         )
         RatingBar(
             Modifier
@@ -83,23 +96,27 @@ fun MovieListItem(
                     )
                 },
             5,
-            movie.voteAverage.let { it.toFloat() * 5f * 0.1f },
+            movie.voteAverage,
             true
         )
         Text(
             movie.title,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 6.dp, start = 8.dp, end = 8.dp),
+                .padding(top = 6.dp, start = 8.dp, end = 8.dp)
+                .skipToLookaheadSize(),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
             textAlign = TextAlign.Center
         )
         Text(
             movie.overview,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 10.dp, start = 10.dp, end = 8.dp, bottom = 20.dp),
+                .padding(top = 10.dp, start = 10.dp, end = 8.dp, bottom = 20.dp)
+                .skipToLookaheadSize(),
             maxLines = 3,
             style = MaterialTheme.typography.titleMedium,
             overflow = TextOverflow.Ellipsis,
@@ -109,19 +126,21 @@ fun MovieListItem(
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, device = "spec:parent=pixel_5")
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun PreviewMovieListItem() {
-    HotMoviesAppComposeTheme {
-        val movie = MovieUI(
+    PreviewSharingTransitionScreen {
+        val movie = MovieUIState(
             56,
             1,
             "backdrop",
             "Test title 1234567890",
             "Original title",
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur",
-            4.0
+            4f,
+            Event(false)
         )
 
         MovieListItem(
@@ -129,8 +148,9 @@ private fun PreviewMovieListItem() {
                 .requiredWidth(200.dp)
                 .wrapContentHeight(),
             150.dp,
-            movie
-        )
+            movie,
+            onLoadSuccess = {}
+        ) {}
     }
 }
 

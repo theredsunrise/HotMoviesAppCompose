@@ -33,7 +33,7 @@ fun RatingBar(
     modifier: Modifier,
     numOfStars: Int = 5,
     rating: Float,
-    inverse: Boolean
+    isInverse: Boolean
 ) {
     val innerStarScaleFactor = 0.80f
     val outerStarScaleFactor = 1.2f
@@ -63,7 +63,7 @@ fun RatingBar(
                                 scaleY = outerStarScaleFactor
                             }
                             .aspectRatio(1f, true),
-                        tint = if (inverse) colors[1] else colors[0]
+                        tint = if (isInverse) colors[1] else colors[0]
                     )
                     Icon(
                         imageVector = Icons.Default.Star, contentDescription = "Star",
@@ -74,7 +74,7 @@ fun RatingBar(
                             }
                             .wrapContentHeight()
                             .aspectRatio(1f, true),
-                        tint = if (inverse) colors[0] else colors[1]
+                        tint = if (isInverse) colors[0] else colors[1]
                     )
 
                     val fraction = when {
@@ -96,7 +96,7 @@ fun RatingBar(
                                 }
                                 .wrapContentHeight()
                                 .aspectRatio(1f, true),
-                            tint = if (inverse) colors[0] else colors[1]
+                            tint = if (isInverse) colors[0] else colors[1]
                         )
                         Icon(
                             imageVector = Icons.Default.Star, contentDescription = "Star",
@@ -107,7 +107,7 @@ fun RatingBar(
                                 }
                                 .wrapContentHeight()
                                 .aspectRatio(1f, true),
-                            tint = if (inverse) colors[1] else colors[0]
+                            tint = if (isInverse) colors[1] else colors[0]
                         )
                     }
                 }
@@ -138,6 +138,6 @@ private class FractionalClipShape(private val fraction: Float) : Shape {
 @Composable
 private fun PreviewRatingBar() {
     HotMoviesAppComposeTheme {
-        RatingBar(Modifier.requiredSize(200.dp, 40.dp), 5, 2.5f, inverse = false)
+        RatingBar(Modifier.requiredSize(200.dp, 40.dp), 5, 2.5f, isInverse = false)
     }
 }

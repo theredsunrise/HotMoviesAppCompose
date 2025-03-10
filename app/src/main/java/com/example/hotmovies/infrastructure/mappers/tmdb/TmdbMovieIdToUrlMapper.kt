@@ -8,6 +8,6 @@ class TmdbMovieIdToUrlMapper : MovieImageIdToUrlMapperInterface {
         "https://image.tmdb.org/t/p/w500"
 
     override fun toUrl(key: String?): String? {
-        return key?.let{ BASE_URL + it}
+        return key?.let { BASE_URL + it }
     }
 }

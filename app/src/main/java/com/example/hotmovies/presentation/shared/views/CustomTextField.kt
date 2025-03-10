@@ -103,7 +103,7 @@ fun CustomTextField(
         onValueChange = if (configurator.isAnimated) {
             {}
         } else onTextChange,
-        enabled = configurator.isEnabled && !configurator.isAnimated,
+        isEnabled = configurator.isEnabled && !configurator.isAnimated,
         isError = if (configurator.isAnimated) false else configurator.error != null,
         visualTransformation = if (showPassword) PasswordVisualTransformation() else VisualTransformation.None,
         keyboardOptions = keyboardOptions.copy(keyboardType = if (configurator.isPassword) KeyboardType.Password else KeyboardType.Text),
@@ -145,8 +145,8 @@ private fun ExtractedOutlinedTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    readOnly: Boolean = false,
+    isEnabled: Boolean = true,
+    isReadOnly: Boolean = false,
     textStyle: TextStyle = LocalTextStyle.current,
     label: @Composable (() -> Unit)? = null,
     placeholder: @Composable (() -> Unit)? = null,
@@ -159,8 +159,8 @@ private fun ExtractedOutlinedTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
-    singleLine: Boolean = false,
-    maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
+    isSingleLine: Boolean = false,
+    maxLines: Int = if (isSingleLine) 1 else Int.MAX_VALUE,
     minLines: Int = 1,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape = OutlinedTextFieldDefaults.shape,
@@ -170,7 +170,7 @@ private fun ExtractedOutlinedTextField(
 ) {
 
     val textColor = textStyle.color.takeOrElse {
-        extractedTextColor(enabled, isError, colors, interactionSource).value
+        extractedTextColor(isEnabled, isError, colors, interactionSource).value
     }
     val mergedTextStyle = textStyle.merge(TextStyle(color = textColor))
     BasicTextField(value = value,
@@ -182,15 +182,15 @@ private fun ExtractedOutlinedTextField(
             modifier
         },
         onValueChange = onValueChange,
-        enabled = enabled,
-        readOnly = readOnly,
+        enabled = isEnabled,
+        readOnly = isReadOnly,
         textStyle = mergedTextStyle,
         cursorBrush = SolidColor(extractedCursorColor(isError, colors).value),
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
         interactionSource = interactionSource,
-        singleLine = singleLine,
+        singleLine = isSingleLine,
         maxLines = maxLines,
         minLines = minLines,
         decorationBox = @Composable { innerTextField ->
@@ -204,15 +204,15 @@ private fun ExtractedOutlinedTextField(
                 prefix = prefix,
                 suffix = suffix,
                 supportingText = supportingText,
-                singleLine = singleLine,
-                enabled = enabled,
+                singleLine = isSingleLine,
+                enabled = isEnabled,
                 isError = isError,
                 interactionSource = interactionSource,
                 colors = colors,
                 contentPadding = contentPadding,
                 container = {
                     Container(
-                        enabled = enabled,
+                        enabled = isEnabled,
                         isError = isError,
                         interactionSource = interactionSource,
                         colors = colors,
@@ -226,7 +226,7 @@ private fun ExtractedOutlinedTextField(
 
 @Composable
 private fun extractedTextColor(
-    enabled: Boolean,
+    isEnabled: Boolean,
     isError: Boolean,
     textFieldColors: TextFieldColors,
     interactionSource: InteractionSource
@@ -234,7 +234,7 @@ private fun extractedTextColor(
     val focused by interactionSource.collectIsFocusedAsState()
 
     val targetValue = when {
-        !enabled -> textFieldColors.disabledTextColor
+        !isEnabled -> textFieldColors.disabledTextColor
         isError -> textFieldColors.errorTextColor
         focused -> textFieldColors.focusedTextColor
         else -> textFieldColors.unfocusedTextColor

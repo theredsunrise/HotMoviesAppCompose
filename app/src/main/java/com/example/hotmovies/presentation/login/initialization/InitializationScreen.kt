@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.hotmovies.presentation.shared.views.CustomCircularProgressIndicator
 import com.example.hotmovies.presentation.theme.HotMoviesAppComposeTheme
 import com.example.hotmovies.shared.Event
 import com.example.hotmovies.shared.ResultState
@@ -52,11 +53,11 @@ fun InitializationScreen(
             .fillMaxSize()
     ) {
         if (sessionValidityState.value.content.isProgress) {
-            CircularProgressIndicator(
+            CustomCircularProgressIndicator(
                 modifier = Modifier
                     .wrapContentSize()
                     .align(Alignment.Center),
-                trackColor = Color.Transparent
+                isInverse = false
             )
         }
     }

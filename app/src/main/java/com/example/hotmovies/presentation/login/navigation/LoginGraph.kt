@@ -1,13 +1,18 @@
 package com.example.hotmovies.presentation.login.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.displayCutout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.createSavedStateHandle
@@ -25,8 +30,11 @@ import com.example.hotmovies.presentation.login.navigation.LoginGraphRoutes.Logi
 import com.example.hotmovies.presentation.login.navigation.LoginGraphRoutes.SessionValidity
 import com.example.hotmovies.presentation.login.viewModel.actions.LoginViewModel
 import com.example.hotmovies.presentation.movies.navigation.MoviesGraph
-import com.example.hotmovies.presentation.shared.showDialog
+import com.example.hotmovies.presentation.shared.LocalNavAnimatedVisibilityScope
+import com.example.hotmovies.presentation.shared.LocalSharedTransitionScope
 import com.example.hotmovies.presentation.shared.views.CustomDialogState
+import com.example.hotmovies.presentation.shared.views.showDialog
+import com.example.hotmovies.shared.Constants
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -43,8 +51,7 @@ private sealed interface LoginGraphRoutes {
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.loginGraph(
-    navController: NavController,
-    sharedTransitionScope: SharedTransitionScope
+    navController: NavController
 ) {
     navigation<LoginGraph>(startDestination = SessionValidity) {
         composable<SessionValidity> {
@@ -83,24 +90,40 @@ fun NavGraphBuilder.loginGraph(
                     errorDialogState.value = CustomDialogState(0, it.message.orEmpty())
                 })
         }
-        composable<Login> {
+        composable<Login>(
+            enterTransition = {
+                fadeIn(
+                    initialAlpha = 0.0f,
+                    animationSpec = tween(Constants.AnimationDurations.DEFAULT)
+                )
+            },
+            exitTransition = {
+                fadeOut(
+                    targetAlpha = 0.0f,
+                    animationSpec = tween(Constants.AnimationDurations.DEFAULT)
+                )
+            }
+        ) {
             val viewModel: LoginViewModel = viewModel {
                 LoginViewModel(createSavedStateHandle(), CustomApplication.diContainer)
             }
-            LoginScreen(
-                Modifier
-                    .fillMaxSize()
-                    .windowInsetsPadding(WindowInsets.systemBars.union(WindowInsets.displayCutout)),
-                sharedTransitionScope,
-                this@composable,
-                viewModel.userNameText.collectAsStateWithLifecycle(),
-                viewModel.passwordText.collectAsStateWithLifecycle(),
-                viewModel.state,
-                viewModel::doAction
-            ) {
-                navController.navigate(MoviesGraph) {
-                    popUpTo(LoginGraph) {
-                        inclusive = true
+
+            with(LocalSharedTransitionScope.current) {
+                CompositionLocalProvider(LocalNavAnimatedVisibilityScope provides this@composable) {
+                    LoginScreen(
+                        Modifier
+                            .fillMaxSize()
+                            .windowInsetsPadding(WindowInsets.systemBars.union(WindowInsets.displayCutout)),
+                        viewModel.userNameText.collectAsStateWithLifecycle(),
+                        viewModel.passwordText.collectAsStateWithLifecycle(),
+                        viewModel.state,
+                        viewModel::doAction
+                    ) {
+                        navController.navigate(MoviesGraph) {
+                            popUpTo(LoginGraph) {
+                                inclusive = true
+                            }
+                        }
                     }
                 }
             }

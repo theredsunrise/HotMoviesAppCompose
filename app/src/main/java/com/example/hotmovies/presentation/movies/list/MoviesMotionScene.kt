@@ -8,7 +8,10 @@ import androidx.constraintlayout.compose.MotionScene
 
 @Composable
 @OptIn(ExperimentalMotionApi::class, ExperimentalMaterial3Api::class)
-fun MoviesMotionScene(compactCollapsibleHeader: Boolean, actionBarHeightDp: Float = TopAppBarDefaults.MediumAppBarCollapsedHeight.value) =
+fun MoviesMotionScene(
+    isCompactCollapsibleHeader: Boolean,
+    actionBarHeightDp: Float = TopAppBarDefaults.MediumAppBarCollapsedHeight.value
+) =
     MotionScene(
         """ 
 {
@@ -38,7 +41,7 @@ fun MoviesMotionScene(compactCollapsibleHeader: Boolean, actionBarHeightDp: Floa
         end: ['parent', 'end'],
         top: ['parent', 'top'],
         width: 'spread',
-        height: ${ if(compactCollapsibleHeader) 0 else 200},
+        height: ${if (isCompactCollapsibleHeader) 0 else 200},
         translationZ: -2,
       },
       indicator: {
@@ -51,7 +54,7 @@ fun MoviesMotionScene(compactCollapsibleHeader: Boolean, actionBarHeightDp: Floa
       },         
       avatar: {
         start: ['info', 'start', 20],
-        top: ['info', 'top', ${ if(compactCollapsibleHeader) 0 else -20}],
+        top: ['info', 'top', ${if (isCompactCollapsibleHeader) 0 else -20}],
         width: 100,
         height: 100,
         translationZ: 0,
@@ -60,7 +63,7 @@ fun MoviesMotionScene(compactCollapsibleHeader: Boolean, actionBarHeightDp: Floa
       info: {
         start: ['parent', 'start'],
         end: ['parent', 'end'],
-        top: ['parent', 'top', ${if(compactCollapsibleHeader) 0 else 110}],
+        top: ['parent', 'top', ${if (isCompactCollapsibleHeader) 0 else 105}],
         width: 'spread',
         height: 150
       },
@@ -102,7 +105,7 @@ fun MoviesMotionScene(compactCollapsibleHeader: Boolean, actionBarHeightDp: Floa
         end: ['parent', 'end'],
         top: ['parent', 'top'],
         width: 'spread',
-        height: ${if(compactCollapsibleHeader) 0 else actionBarHeightDp},
+        height: ${if (isCompactCollapsibleHeader) 0 else actionBarHeightDp},
         translationZ: -2,
       },
       indicator: {
