@@ -1,17 +1,16 @@
 package com.example.hotmovies.presentation.shared.helpers
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.snapshots.Snapshot
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.hotmovies.shared.checkMainThread
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun <T> LifecycleAwareFlowsCollector(stateFlow: Flow<T>, onCollect: (T) -> Unit) {
-    val flowState by stateFlow.collectAsStateWithLifecycle(null)
-    LaunchedEffect(flowState) {
-        flowState?.also {
-            onCollect(it)
-        }
-    }
+    stateFlow.onEach { flowState ->
+        checkMainThread()
+        flowState?.also { onCollect(it) }
+    }.collectAsStateWithLifecycle(null)
 }
