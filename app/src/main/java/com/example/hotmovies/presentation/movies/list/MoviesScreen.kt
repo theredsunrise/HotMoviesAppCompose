@@ -9,9 +9,6 @@ import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.ArcAnimationSpec
 import androidx.compose.animation.core.ArcMode
 import androidx.compose.animation.core.ExperimentalAnimationSpecApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -38,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.graphicsLayer
@@ -124,7 +120,11 @@ fun SharedTransitionScope.MoviesScreen(
         onBack()
     }
 
-    var isShowContentAfterInitialTransition by rememberSaveable { mutableStateOf(isLocalInspectionMode) }
+    var isShowContentAfterInitialTransition by rememberSaveable {
+        mutableStateOf(
+            isLocalInspectionMode
+        )
+    }
     FloatFractionAnimationStates(
         transitionOverlayFractionProgress
     ) { oldState, newState ->

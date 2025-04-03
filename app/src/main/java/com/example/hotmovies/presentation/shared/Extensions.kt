@@ -85,7 +85,8 @@ fun Modifier.safeClickable(
 
 @Composable
 fun Transition<EnterExitState>.floatFractionTransitionStates(): State<Float> =
-    animateFloat(label = "Transition Fraction Animation",
+    animateFloat(
+        label = "Transition Fraction Animation",
         transitionSpec = {
             if (EnterExitState.Visible isTransitioningTo EnterExitState.PostExit)
                 SnapSpec()

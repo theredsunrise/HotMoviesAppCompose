@@ -4,12 +4,12 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import androidx.annotation.DrawableRes
 import com.example.hotmovies.appplication.movies.interfaces.MovieDataRepositoryInterface
+import com.example.hotmovies.appplication.movies.interfaces.MovieDataRepositoryInterface.Exceptions.NoNetworkConnectionException
 import com.example.hotmovies.domain.Movie
 import com.example.hotmovies.domain.MovieDetails
 import com.example.hotmovies.domain.MoviesInfo
 import com.example.hotmovies.domain.User
 import com.example.hotmovies.infrastructure.NetworkStatusResolver
-import com.example.hotmovies.infrastructure.dataRepository.mock.MockMovieDataRepository.Exceptions.NoNetworkConnectionException
 import com.example.hotmovies.shared.checkNotMainThread
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -21,10 +21,6 @@ class MockMovieDataRepository(
     private val isCheckNetworkConnection: Boolean
 ) :
     MovieDataRepositoryInterface {
-
-    sealed class Exceptions(msg: String) : Exception(msg) {
-        class NoNetworkConnectionException : Exceptions("No network connection is available.")
-    }
 
     override fun getUser(): Flow<User> = flow {
         checkNotMainThread()

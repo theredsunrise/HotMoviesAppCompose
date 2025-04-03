@@ -9,7 +9,6 @@ import androidx.compose.animation.core.ArcMode
 import androidx.compose.animation.core.ExperimentalAnimationSpecApi
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.safeContent
@@ -29,7 +28,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalInspectionMode
@@ -37,7 +35,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -208,7 +205,8 @@ fun SharedTransitionScope.LoginScreen(
             CustomButton(
                 modifier = Modifier
                     .layoutId("login")
-                    .sharedBounds(rememberSharedContentState(key = "Transition"),
+                    .sharedBounds(
+                        rememberSharedContentState(key = "Transition"),
                         LocalNavAnimatedVisibilityScope.current,
                         resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds,
                         boundsTransform = { _, _ ->

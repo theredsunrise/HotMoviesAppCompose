@@ -157,15 +157,16 @@ fun SharedTransitionScope.MovieDetailsScreen(
             )
 
             val pathColor = MaterialTheme.colorScheme.onSecondaryContainer
-            Canvas(modifier = Modifier
-                .constrainAs(clippedView) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    bottom.linkTo(backdropImage.bottom)
-                    height = Dimension.value(80.dp)
-                    width = Dimension.matchParent
-                }
-                .skipToLookaheadSize()
+            Canvas(
+                modifier = Modifier
+                    .constrainAs(clippedView) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(backdropImage.bottom)
+                        height = Dimension.value(80.dp)
+                        width = Dimension.matchParent
+                    }
+                    .skipToLookaheadSize()
             ) {
 
                 val path = Path().apply {

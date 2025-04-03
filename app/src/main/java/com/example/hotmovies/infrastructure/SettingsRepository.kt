@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.hotmovies.appplication.login.interfaces.SettingsRepositoryInterface
+import com.example.hotmovies.appplication.login.interfaces.SettingsRepositoryInterface.Exceptions.NoValueException
 import com.example.hotmovies.shared.checkNotMainThread
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -18,7 +19,7 @@ class SettingsRepository(private val dataStore: DataStore<Preferences>) :
             checkNotMainThread()
             val stringKey = stringPreferencesKey(key)
             preferences[stringKey]
-                ?: throw SettingsRepositoryInterface.Exceptions.NoValueException(
+                ?: throw NoValueException(
                     key,
                     Boolean::class.java
                 )

@@ -76,7 +76,8 @@ fun CustomTextField(
     val animationContainerColor = MaterialTheme.colorScheme.secondaryContainer
     var showPassword by rememberSaveable { mutableStateOf(value = configurator.isPassword) }
 
-    ExtractedOutlinedTextField(if (configurator.isAnimated) "" else {
+    ExtractedOutlinedTextField(
+        if (configurator.isAnimated) "" else {
         text.value
     },
         modifier = modifier.drawWithCache {
@@ -173,7 +174,8 @@ private fun ExtractedOutlinedTextField(
         extractedTextColor(isEnabled, isError, colors, interactionSource).value
     }
     val mergedTextStyle = textStyle.merge(TextStyle(color = textColor))
-    BasicTextField(value = value,
+    BasicTextField(
+        value = value,
         modifier = if (label != null) {
             modifier
                 .semantics(mergeDescendants = true) {}
@@ -194,7 +196,8 @@ private fun ExtractedOutlinedTextField(
         maxLines = maxLines,
         minLines = minLines,
         decorationBox = @Composable { innerTextField ->
-            OutlinedTextFieldDefaults.DecorationBox(value = value,
+            OutlinedTextFieldDefaults.DecorationBox(
+                value = value,
                 visualTransformation = visualTransformation,
                 innerTextField = innerTextField,
                 placeholder = placeholder,
@@ -257,7 +260,8 @@ private fun PreviewCustomTextField() {
         val configurator = CustomTextFieldConfigurator(
             isPassword = false,
         )
-        CustomTextField(Modifier.fillMaxWidth(),
+        CustomTextField(
+            Modifier.fillMaxWidth(),
             { configurator },
             label = "Label",
             text,

@@ -5,8 +5,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.annotation.DrawableRes
 import com.example.hotmovies.appplication.login.interfaces.MovieImageRepositoryInterface
+import com.example.hotmovies.appplication.login.interfaces.MovieImageRepositoryInterface.Exceptions.NoNetworkConnectionException
 import com.example.hotmovies.infrastructure.NetworkStatusResolver
-import com.example.hotmovies.infrastructure.dataRepository.mock.MockMovieImageRepository.Exceptions.NoNetworkConnectionException
 import com.example.hotmovies.shared.checkNotMainThread
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,10 +20,6 @@ class MockMovieImageRepository(
     @DrawableRes private val avatarId: Int
 ) :
     MovieImageRepositoryInterface {
-
-    sealed class Exceptions(msg: String) : Exception(msg) {
-        class NoNetworkConnectionException : Exceptions("No network connection is available.")
-    }
 
     override fun getImage(id: String): InputStream {
         checkNotMainThread()

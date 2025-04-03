@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import com.example.hotmovies.BuildConfig
 import com.example.hotmovies.appplication.login.interfaces.MovieImageRepositoryInterface
 import com.example.hotmovies.appplication.movies.interfaces.MovieDataRepositoryInterface
+import com.example.hotmovies.appplication.movies.interfaces.MovieDataRepositoryInterface.Exceptions.ResponseException
 import com.example.hotmovies.domain.MovieDetails
 import com.example.hotmovies.domain.MoviesInfo
 import com.example.hotmovies.domain.User
@@ -20,15 +21,12 @@ class TmdbMovieDataRepository(
     private val dataApiService: TmdbMovieDataApiInterface,
     private val imageRepository: MovieImageRepositoryInterface
 ) : MovieDataRepositoryInterface {
-    sealed class Exceptions(msg: String) : Exception(msg) {
-        class ResponseException(msg: String) : Exceptions(msg)
-    }
 
     override fun getUser(): Flow<User> = flow {
         checkNotMainThread()
         val userResponse = dataApiService.getUser(BuildConfig.TMDB_ACCOUNT_ID.toUse(32)).apply {
             errorInBody()?.also { msg ->
-                throw Exceptions.ResponseException(msg)
+                throw ResponseException(msg)
             }
         }
         val userDto = requireNotNull(userResponse.body())
@@ -45,7 +43,7 @@ class TmdbMovieDataRepository(
         checkNotMainThread()
         val movieDetailsResponse = dataApiService.getMovieDetails(movieId).apply {
             errorInBody()?.also { msg ->
-                throw Exceptions.ResponseException(msg)
+                throw ResponseException(msg)
             }
         }
         emit(requireNotNull(movieDetailsResponse.body()).toDomain())
@@ -55,7 +53,7 @@ class TmdbMovieDataRepository(
         checkNotMainThread()
         val moviesResponse = dataApiService.getTrendingMoviesInfo(pageId).apply {
             errorInBody()?.also { msg ->
-                throw Exceptions.ResponseException(msg)
+                throw ResponseException(msg)
             }
         }
         emit(requireNotNull(moviesResponse.body()).toDomain())

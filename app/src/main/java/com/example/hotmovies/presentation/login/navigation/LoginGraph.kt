@@ -1,7 +1,5 @@
 package com.example.hotmovies.presentation.login.navigation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -71,7 +69,8 @@ fun NavGraphBuilder.loginGraph(
                 viewModel.doAction(CheckSessionValidity)
             }
 
-            InitializationScreen(viewModel.state.collectAsStateWithLifecycle(),
+            InitializationScreen(
+                viewModel.state.collectAsStateWithLifecycle(),
                 onSessionValid = { isValid ->
                     if (isValid) {
                         navController.navigate(MoviesGraph) {

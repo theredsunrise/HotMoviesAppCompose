@@ -30,7 +30,8 @@ fun CustomTopAppBar(
     windowInsets: WindowInsets = TopAppBarDefaults.windowInsets,
     onBackPress: () -> Unit
 ) {
-    TopAppBar(title = { Text(title) },
+    TopAppBar(
+        title = { Text(title) },
         modifier,
         colors = TopAppBarDefaults.topAppBarColors().copy(containerColor = Color.Transparent),
         windowInsets = windowInsets,

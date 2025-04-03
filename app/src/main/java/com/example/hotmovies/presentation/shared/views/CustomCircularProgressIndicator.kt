@@ -9,7 +9,11 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomCircularProgressIndicator(modifier: Modifier, isInverse: Boolean, isVisible: Boolean = true) =
+fun CustomCircularProgressIndicator(
+    modifier: Modifier,
+    isInverse: Boolean,
+    isVisible: Boolean = true
+) =
     CircularProgressIndicator(
         strokeWidth = 3.dp,
         color = if (isInverse) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.primary,

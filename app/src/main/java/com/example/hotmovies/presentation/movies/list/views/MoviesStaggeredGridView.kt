@@ -113,7 +113,8 @@ fun SharedTransitionScope.MoviesStaggeredGridView(
                         Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
-                            .sharedElement(rememberSharedContentState(key = movie.backDropTransitionKey),
+                            .sharedElement(
+                                rememberSharedContentState(key = movie.backDropTransitionKey),
                                 LocalNavAnimatedVisibilityScope.current,
                                 boundsTransform = { _, _ ->
                                     tween(Constants.AnimationDurations.DEFAULT)

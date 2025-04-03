@@ -1,7 +1,6 @@
 package com.example.hotmovies.presentation.shared.helpers
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.Snapshot
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.hotmovies.shared.checkMainThread
 import kotlinx.coroutines.flow.Flow

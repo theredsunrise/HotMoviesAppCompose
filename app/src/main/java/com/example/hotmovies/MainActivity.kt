@@ -62,7 +62,8 @@ class MainActivity : ComponentActivity(), UserInteractionConfigurableComponent {
                         CompositionLocalProvider(
                             LocalSharedTransitionScope provides this
                         ) {
-                            NavHost(navController, startDestination = LoginGraph,
+                            NavHost(
+                                navController, startDestination = LoginGraph,
                                 enterTransition = { EnterTransition.None },
                                 exitTransition = { ExitTransition.None },
                                 popExitTransition = { ExitTransition.None },
