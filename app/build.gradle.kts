@@ -88,7 +88,6 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.lottie.compose)
     implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons)
     implementation(libs.androidx.material.icons.extended)
@@ -111,10 +110,14 @@ dependencies {
     implementation(libs.coil3.okhttp.compose)
 
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    debugImplementation(libs.androidx.ui.tooling.preview)
+    debugImplementation(libs.androidx.ui.tooling)
+    releaseCompileOnly(libs.androidx.ui.tooling.preview)
+    releaseCompileOnly(libs.androidx.ui.tooling)
 }
