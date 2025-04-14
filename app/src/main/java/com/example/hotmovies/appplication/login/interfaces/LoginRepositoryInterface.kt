@@ -14,5 +14,5 @@ interface LoginRepositoryInterface {
 
     fun logout(): Flow<Unit>
 
-    fun isSessionExpired(token: String): Flow<Boolean>
+    fun isSessionValid(token: String): Flow<Boolean>
 }

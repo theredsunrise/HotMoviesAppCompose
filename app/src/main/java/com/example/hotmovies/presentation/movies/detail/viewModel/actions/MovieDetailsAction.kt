@@ -1,7 +1,8 @@
 package com.example.hotmovies.presentation.movies.detail.viewModel.actions
 
-import com.example.hotmovies.appplication.DIContainer
 import com.example.hotmovies.appplication.movies.MovieDetailsUseCase
+import com.example.hotmovies.appplication.movies.interfaces.MovieDataRepositoryInterface
+import com.example.hotmovies.appplication.movies.interfaces.MovieImageIdToUrlMapperInterface
 import com.example.hotmovies.presentation.movies.dtos.MovieDetailsUIMapper
 import com.example.hotmovies.presentation.movies.dtos.MovieDetailsUIState
 import com.example.hotmovies.presentation.shared.viewModels.BaseResultStateViewModelAction
@@ -16,12 +17,12 @@ import kotlinx.coroutines.flow.map
 
 class MovieDetailsAction(
     coroutineScope: CoroutineScope,
-    diContainer: DIContainer
+    private val movieDataRepository: MovieDataRepositoryInterface,
+    imageIdToUrlMapper: MovieImageIdToUrlMapperInterface,
 ) :
     BaseResultStateViewModelAction<Int, MovieDetailsUIState>(coroutineScope, none) {
 
-    private val movieDataRepository = diContainer.tmdbMovieDataRepository
-    private val uiMapper = MovieDetailsUIMapper(diContainer.tmdbMovieImageIdToUrlMapper)
+    private val uiMapper = MovieDetailsUIMapper(imageIdToUrlMapper)
 
     override fun action(value: Int): Flow<ResultState<MovieDetailsUIState>> {
         return MovieDetailsUseCase(movieDataRepository)(value).map {

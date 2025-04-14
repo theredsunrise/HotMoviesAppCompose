@@ -5,7 +5,8 @@ import androidx.compose.runtime.Stable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.hotmovies.appplication.DIContainer
+import com.example.hotmovies.appplication.login.interfaces.LoginRepositoryInterface
+import com.example.hotmovies.appplication.login.interfaces.SettingsRepositoryInterface
 import com.example.hotmovies.domain.LoginPassword
 import com.example.hotmovies.domain.LoginUserName
 import com.example.hotmovies.presentation.shared.UIControlState
@@ -23,7 +24,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
-class LoginViewModel(private val savedStateHandle: SavedStateHandle, diContainer: DIContainer) :
+class LoginViewModel(
+    private val savedStateHandle: SavedStateHandle,
+    loginRepository: LoginRepositoryInterface,
+    settingsRepository: SettingsRepositoryInterface,
+) :
     ViewModel() {
 
     @Stable
@@ -59,7 +64,7 @@ class LoginViewModel(private val savedStateHandle: SavedStateHandle, diContainer
     private var _state = MutableStateFlow(UIState.defaultState())
     val state = _state.asStateFlow()
 
-    private val loginAction = LoginAction(viewModelScope, diContainer)
+    private val loginAction = LoginAction(viewModelScope, loginRepository, settingsRepository)
 
     init {
         combine(userNameText, passwordText) { userName, password ->

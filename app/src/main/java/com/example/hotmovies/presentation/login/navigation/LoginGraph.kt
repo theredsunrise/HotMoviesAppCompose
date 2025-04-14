@@ -33,6 +33,7 @@ import com.example.hotmovies.presentation.shared.LocalSharedTransitionScope
 import com.example.hotmovies.presentation.shared.views.CustomDialogState
 import com.example.hotmovies.presentation.shared.views.showDialog
 import com.example.hotmovies.shared.Constants
+import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -55,7 +56,12 @@ fun NavGraphBuilder.loginGraph(
         composable<SessionValidity> {
 
             val viewModel: InitializationViewModel = viewModel {
-                InitializationViewModel(CustomApplication.diContainer)
+                val diContainer = CustomApplication.diContainer
+                InitializationViewModel(
+                    diContainer.loginRepository,
+                    diContainer.settingsRepository,
+                    Dispatchers.IO
+                )
             }
 
             val errorDialogState = showDialog(onCancel = { _ ->
@@ -104,7 +110,12 @@ fun NavGraphBuilder.loginGraph(
             }
         ) {
             val viewModel: LoginViewModel = viewModel {
-                LoginViewModel(createSavedStateHandle(), CustomApplication.diContainer)
+                val diContainer = CustomApplication.diContainer
+                LoginViewModel(
+                    createSavedStateHandle(),
+                    diContainer.loginRepository,
+                    diContainer.settingsRepository
+                )
             }
 
             with(LocalSharedTransitionScope.current) {

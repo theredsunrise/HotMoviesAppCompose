@@ -8,7 +8,7 @@ import com.example.hotmovies.shared.Event
 
 @Stable
 @Immutable
-data class MovieDetailsUIState private constructor(
+class MovieDetailsUIState private constructor(
     val id: Int,
     val backdropUrl: String?,
     val title: String,
@@ -35,6 +35,34 @@ data class MovieDetailsUIState private constructor(
         }
 
         fun defaultState() = MovieDetailsUIState(0, null, "", "", null, 0f, Event(false))
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MovieDetailsUIState
+
+        if (id != other.id) return false
+        if (voteAverage != other.voteAverage) return false
+        if (backdropUrl != other.backdropUrl) return false
+        if (title != other.title) return false
+        if (overview != other.overview) return false
+        if (posterUrl != other.posterUrl) return false
+        if (isLoaded != other.isLoaded) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id
+        result = 31 * result + voteAverage.hashCode()
+        result = 31 * result + (backdropUrl?.hashCode() ?: 0)
+        result = 31 * result + title.hashCode()
+        result = 31 * result + overview.hashCode()
+        result = 31 * result + (posterUrl?.hashCode() ?: 0)
+        result = 31 * result + isLoaded.hashCode()
+        return result
     }
 }
 

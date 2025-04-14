@@ -13,12 +13,15 @@ sealed interface ResultState<out T> {
     @Stable
     @Immutable
     data object None : ResultState<Nothing>
+
     @Stable
     @Immutable
     data object Progress : ResultState<Nothing>
+
     @Stable
     @Immutable
     data class Success<T>(val value: T) : ResultState<T>
+
     @Stable
     @Immutable
     data class Failure(val exception: Exception) : ResultState<Nothing>
@@ -85,10 +88,9 @@ fun Exception.stateFailure() = ResultState.Failure(this)
 fun Exception.stateEventFailure() = Event(ResultState.Failure(this))
 
 typealias none = ResultState.None
-
-val eventNone = Event(ResultState.None)
 typealias progress = ResultState.Progress
 
+val eventNone: Event<none> get() = Event(ResultState.None)
 val progressEvent: Event<progress> get() = Event(progress)
 
 fun <T> Flow<T>.asStateResult(): Flow<ResultState<T>> {

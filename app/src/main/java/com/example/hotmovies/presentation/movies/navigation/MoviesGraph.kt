@@ -86,7 +86,15 @@ fun NavGraphBuilder.moviesGraph(
             }
         ) {
             val viewModel: MoviesViewModel = viewModel {
-                MoviesViewModel(CustomApplication.diContainer)
+                val diContainer = CustomApplication.diContainer
+                MoviesViewModel(
+                    diContainer.appContext.resources,
+                    diContainer.pager,
+                    diContainer.movieImageIdToUrlMapper,
+                    diContainer.loginRepository,
+                    diContainer.settingsRepository,
+                    diContainer.movieDataRepository
+                )
             }
 
             val currentActivity = LocalActivity.current
@@ -142,7 +150,11 @@ fun NavGraphBuilder.moviesGraph(
         }
         composable<MovieDetail>() {
             val viewModel: MovieDetailsViewModel = viewModel {
-                MovieDetailsViewModel(CustomApplication.diContainer)
+                val diContainer = CustomApplication.diContainer
+                MovieDetailsViewModel(
+                    diContainer.movieDataRepository,
+                    diContainer.movieImageIdToUrlMapper
+                )
             }
 
             val movieDetailItem = with(it.toRoute<MovieDetail>()) {

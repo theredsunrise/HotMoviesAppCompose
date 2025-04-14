@@ -46,36 +46,36 @@ class DIContainer(val appContext: Context) {
         SettingsRepository(appContext.dataStore)
     }
 
-    val tmdbPager: Pager<Int, Movie> by lazy {
+    val pager: Pager<Int, Movie> by lazy {
         val pagingConfig = PagingConfig(20, enablePlaceholders = false)
         Pager(
             config = pagingConfig,
             pagingSourceFactory = {
                 MoviePagingSource(
-                    tmdbMovieDataRepository,
+                    movieDataRepository,
                     Dispatchers.IO
                 )
             }
         )
     }
 
-    val tmdbMovieImageIdToUrlMapper: MovieImageIdToUrlMapperInterface by lazy {
+    val movieImageIdToUrlMapper: MovieImageIdToUrlMapperInterface by lazy {
         TmdbMovieIdToUrlMapper()
     }
 
-    val tmdbMovieImageRepository: MovieImageRepositoryInterface by lazy {
+    val movieImageRepository: MovieImageRepositoryInterface by lazy {
         TmdbMovieImageRepository(tmdbMovieImageApiService)
     }
 
-    val _tmdbMovieImageRepository: MovieImageRepositoryInterface by lazy {
+    val _movieImageRepository: MovieImageRepositoryInterface by lazy {
         MockMovieImageRepository(appContext, R.drawable.vector_background)
     }
 
-    val tmdbMovieDataRepository: MovieDataRepositoryInterface by lazy {
-        TmdbMovieDataRepository(tmdbMovieDataApiService, tmdbMovieImageRepository)
+    val movieDataRepository: MovieDataRepositoryInterface by lazy {
+        TmdbMovieDataRepository(tmdbMovieDataApiService, movieImageRepository)
     }
 
-    val _tmdbMovieDataRepository: MovieDataRepositoryInterface by lazy {
+    val _movieDataRepository: MovieDataRepositoryInterface by lazy {
         MockMovieDataRepository(appContext, R.drawable.vector_background, true)
     }
 

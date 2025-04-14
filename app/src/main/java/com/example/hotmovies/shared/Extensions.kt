@@ -9,9 +9,17 @@ import kotlin.experimental.xor
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
+fun checkMainThread() {
+    if (System.getProperty("isTest") == null) {
+        assert(Looper.myLooper() == Looper.getMainLooper())
+    }
+}
 
-fun checkMainThread() = assert(Looper.myLooper() == Looper.getMainLooper())
-fun checkNotMainThread() = assert(Looper.myLooper() != Looper.getMainLooper())
+fun checkNotMainThread() {
+    if (System.getProperty("isTest") == null) {
+        assert(Looper.myLooper() != Looper.getMainLooper())
+    }
+}
 
 //xor string with a char key
 @OptIn(ExperimentalEncodingApi::class)

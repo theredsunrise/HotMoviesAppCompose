@@ -162,7 +162,7 @@ private fun MoviesGridView() {
         val context = LocalContext.current
         val pagingDataFlow = remember {
             val diContainer = DIContainer(context)
-            val uiMapper = MovieUIMapper(diContainer.tmdbMovieImageIdToUrlMapper)
+            val uiMapper = MovieUIMapper(diContainer.movieImageIdToUrlMapper)
 
             diContainer.previewMovieDataRepository
                 .getTrendingMoviesInfo(1, 20)

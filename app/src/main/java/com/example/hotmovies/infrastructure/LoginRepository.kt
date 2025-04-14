@@ -35,7 +35,7 @@ class LoginRepository(private val appContext: Context) : LoginRepositoryInterfac
         emit(Unit)
     }
 
-    override fun isSessionExpired(token: String): Flow<Boolean> = flow {
+    override fun isSessionValid(token: String): Flow<Boolean> = flow {
         checkNotMainThread()
         delay(500)
         if (!NetworkStatusResolver.isNetworkAvailable(appContext)) throw NoNetworkConnectionException()
