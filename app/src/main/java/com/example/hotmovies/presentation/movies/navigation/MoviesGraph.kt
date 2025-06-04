@@ -169,8 +169,6 @@ fun NavGraphBuilder.moviesGraph(
                 CompositionLocalProvider(LocalNavAnimatedVisibilityScope provides this@composable) {
                     MovieDetailsScreen(
                         Modifier
-                            .fillMaxSize()
-                            .windowInsetsPadding(WindowInsets.navigationBars)
                             .sharedElement(
                                 rememberSharedContentState(key = movieDetailItem.backDropTransitionKey),
                                 LocalNavAnimatedVisibilityScope.current,
@@ -178,7 +176,9 @@ fun NavGraphBuilder.moviesGraph(
                                     tween(Constants.AnimationDurations.DEFAULT)
                                 },
                                 clipInOverlayDuringTransition = OverlayClip(MaterialTheme.shapes.medium)
-                            ),
+                            )
+                            .fillMaxSize()
+                            .windowInsetsPadding(WindowInsets.navigationBars),
                         movieDetailItem,
                         viewModel.state.collectAsStateWithLifecycle(),
                         viewModel::doAction,

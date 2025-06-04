@@ -99,11 +99,11 @@ fun SharedTransitionScope.LoginScreen(
         checkMainThread()
 
         currentActivity?.isEnabled = value.isScreenEnabled
-        val loginAction =
+        val consumableAction =
             value.loginAction.getContentIfNotHandled() ?: return@LifecycleAwareFlowsCollector
         when {
-            loginAction.isSuccessTrue -> onLogin()
-            loginAction.isFailure -> launchAnimation = false
+            consumableAction.isSuccessTrue -> onLogin()
+            consumableAction.isFailure -> launchAnimation = false
         }
     }
 
@@ -259,7 +259,7 @@ private fun LoginScreenPreview() {
                     state
                 ).stateIn(
                     scope,
-                    SharingStarted.WhileSubscribed(8000),
+                    SharingStarted.WhileSubscribed(5000),
                     state
                 )
             },

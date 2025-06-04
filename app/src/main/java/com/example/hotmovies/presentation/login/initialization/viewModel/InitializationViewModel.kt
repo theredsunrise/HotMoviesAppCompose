@@ -6,7 +6,10 @@ import com.example.hotmovies.appplication.login.interfaces.LoginRepositoryInterf
 import com.example.hotmovies.appplication.login.interfaces.SettingsRepositoryInterface
 import com.example.hotmovies.presentation.login.initialization.viewModel.InitializationViewModel.Actions.CheckSessionValidity
 import com.example.hotmovies.presentation.login.initialization.viewModel.actions.SessionValidityAction
+import com.example.hotmovies.shared.eventNone
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 
 class InitializationViewModel(
     loginRepository: LoginRepositoryInterface,
@@ -15,11 +18,16 @@ class InitializationViewModel(
 ) :
     ViewModel() {
     private val sessionValidityAction =
-        SessionValidityAction(viewModelScope, loginRepository, settingsRepository, dispatcher) {
+        SessionValidityAction(loginRepository, settingsRepository, dispatcher) {
             doAction(CheckSessionValidity)
         }
 
     val state = sessionValidityAction.state
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            eventNone
+        )
 
     sealed interface Actions {
         data object CheckSessionValidity : Actions

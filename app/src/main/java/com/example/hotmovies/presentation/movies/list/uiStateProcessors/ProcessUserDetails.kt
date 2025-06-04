@@ -30,11 +30,11 @@ fun ProcessUserDetails(
             return@LifecycleAwareFlowsCollector
         }
 
-        val userDetailsAction =
+        val consumableAction =
             userDetailsActionEvent.getContentIfNotHandled() ?: return@LifecycleAwareFlowsCollector
         when {
-            userDetailsAction.isSuccessTrue -> onAction(LoadMovies)
-            userDetailsAction.isSuccessFalse -> onAction(LoadUserDetails)
+            consumableAction.isSuccessTrue -> onAction(LoadMovies)
+            consumableAction.isSuccessFalse -> onAction(LoadUserDetails)
         }
     }
 }

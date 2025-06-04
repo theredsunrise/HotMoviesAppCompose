@@ -8,18 +8,16 @@ import com.example.hotmovies.appplication.movies.interfaces.MovieImageIdToUrlMap
 import com.example.hotmovies.domain.Movie
 import com.example.hotmovies.presentation.movies.dtos.MovieUIMapper
 import com.example.hotmovies.presentation.movies.dtos.MovieUIState
-import com.example.hotmovies.presentation.movies.dtos.pagingDataProgress
 import com.example.hotmovies.presentation.shared.viewModels.BaseViewModelAction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class MoviesAction(
-    coroutineScope: CoroutineScope,
     private val moviePager: Pager<Int, Movie>,
     imageIdToUrlMapper: MovieImageIdToUrlMapperInterface,
     private val cacheCoroutineScope: CoroutineScope
-) : BaseViewModelAction<Unit, PagingData<MovieUIState>>(coroutineScope, pagingDataProgress) {
+) : BaseViewModelAction<Unit, PagingData<MovieUIState>>(1) {
 
     private val uiMapper = MovieUIMapper(imageIdToUrlMapper)
 

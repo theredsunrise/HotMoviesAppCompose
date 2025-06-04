@@ -11,16 +11,14 @@ import com.example.hotmovies.shared.none
 import com.example.hotmovies.shared.progress
 import com.example.hotmovies.shared.state
 import com.example.hotmovies.shared.stateFailure
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class MovieDetailsAction(
-    coroutineScope: CoroutineScope,
     private val movieDataRepository: MovieDataRepositoryInterface,
     imageIdToUrlMapper: MovieImageIdToUrlMapperInterface,
 ) :
-    BaseResultStateViewModelAction<Int, MovieDetailsUIState>(coroutineScope, none) {
+    BaseResultStateViewModelAction<Int, MovieDetailsUIState>() {
 
     private val uiMapper = MovieDetailsUIMapper(imageIdToUrlMapper)
 

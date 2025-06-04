@@ -6,6 +6,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import com.example.hotmovies.presentation.shared.helpers.FloatFractionAnimationState.END
 import com.example.hotmovies.presentation.shared.helpers.FloatFractionAnimationState.PROGRESS
@@ -36,14 +37,14 @@ fun FloatFractionAnimationStates(
         1f -> END
         else -> PROGRESS
     }
-    val states = remember(statesValue) { mutableStateOf(statesValue) }
+
+    val states = rememberUpdatedState(statesValue)
     var oldValue by remember { mutableStateOf(START) }
 
-    LaunchedEffect(states.value) {
-        val newValue = states.value
-        onChange?.invoke(oldValue, newValue)
-        when (newValue) {
-            START, END -> oldValue = newValue
+    LaunchedEffect(statesValue) {
+        onChange?.invoke(oldValue, statesValue)
+        when (statesValue) {
+            START, END -> oldValue = statesValue
             else -> {}
         }
     }

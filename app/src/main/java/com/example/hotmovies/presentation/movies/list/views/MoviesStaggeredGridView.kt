@@ -27,6 +27,9 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
@@ -53,7 +56,11 @@ fun SharedTransitionScope.MoviesStaggeredGridView(
     onError: (exception: Exception) -> Unit
 ) {
 
-    val pagingDataItems = pagingDataItemsFlow.collectAsLazyPagingItems()
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val pagingDataItems = remember(pagingDataItemsFlow) {
+        pagingDataItemsFlow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+    }.collectAsLazyPagingItems()
+
     val loadErrorState: Throwable? by remember {
         derivedStateOf {
             with(pagingDataItems.loadState.source) {
@@ -153,7 +160,6 @@ private fun resolveHeightOfItem(positionOfItem: Int): Dp {
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
-@SuppressLint("FlowOperatorInvokedInComposition")
 @Preview(showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
 private fun MoviesGridView() {

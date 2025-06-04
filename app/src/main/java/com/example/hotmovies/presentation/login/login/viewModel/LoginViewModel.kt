@@ -64,7 +64,7 @@ class LoginViewModel(
     private var _state = MutableStateFlow(UIState.defaultState())
     val state = _state.asStateFlow()
 
-    private val loginAction = LoginAction(viewModelScope, loginRepository, settingsRepository)
+    private val loginAction = LoginAction(loginRepository, settingsRepository)
 
     init {
         combine(userNameText, passwordText) { userName, password ->

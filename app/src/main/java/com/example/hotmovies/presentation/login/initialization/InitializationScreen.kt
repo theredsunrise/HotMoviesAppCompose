@@ -37,11 +37,11 @@ fun InitializationScreen(
             return@LaunchedEffect
         }
 
-        val sessionValidityAction =
+        val consumableAction =
             sessionValidityEvent.getContentIfNotHandled() ?: return@LaunchedEffect
         when {
-            sessionValidityAction is ResultState.Success -> onSessionValid(
-                sessionValidityAction.value
+            consumableAction is ResultState.Success -> onSessionValid(
+                consumableAction.value
             )
         }
     }

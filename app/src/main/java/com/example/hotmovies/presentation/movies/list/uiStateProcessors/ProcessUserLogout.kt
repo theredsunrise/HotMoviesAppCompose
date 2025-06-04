@@ -30,10 +30,10 @@ fun ProcessUserLogout(
             return@LifecycleAwareFlowsCollector
         }
 
-        val userDetailsAction =
+        val consumableAction =
             logoutActionEvent.getContentIfNotHandled() ?: return@LifecycleAwareFlowsCollector
-        when {
-            userDetailsAction.isSuccessTrue -> onLogout()
+        if (consumableAction.isSuccessTrue) {
+            onLogout()
         }
     }
 }

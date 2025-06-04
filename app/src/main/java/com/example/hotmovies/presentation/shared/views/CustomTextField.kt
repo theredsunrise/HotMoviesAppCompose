@@ -78,8 +78,8 @@ fun CustomTextField(
 
     ExtractedOutlinedTextField(
         if (configurator.isAnimated) "" else {
-        text.value
-    },
+            text.value
+        },
         modifier = modifier.drawWithCache {
             onDrawWithContent {
                 if (configurator.isAnimated) {

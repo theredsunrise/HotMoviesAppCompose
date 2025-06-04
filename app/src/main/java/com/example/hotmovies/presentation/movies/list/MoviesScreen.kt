@@ -1,6 +1,5 @@
 package com.example.hotmovies.presentation.movies.list
 
-import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
@@ -338,7 +337,6 @@ fun SharedTransitionScope.MoviesScreen(
     }
 }
 
-@SuppressLint("FlowOperatorInvokedInComposition")
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(
     showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_NO,
@@ -352,7 +350,7 @@ private fun MoviesScreenPreview() {
         val stateFlow = remember {
             flowOf(
                 state
-            ).stateIn(scope, SharingStarted.WhileSubscribed(8000), state)
+            ).stateIn(scope, SharingStarted.WhileSubscribed(5000), state)
         }
 
         val context = LocalContext.current

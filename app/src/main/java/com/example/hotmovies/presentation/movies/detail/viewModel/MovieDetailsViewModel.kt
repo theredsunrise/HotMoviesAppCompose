@@ -39,7 +39,7 @@ class MovieDetailsViewModel(
     }
 
     private val movieDetailsAction =
-        MovieDetailsAction(viewModelScope, movieDataRepository, imageIdToUrlMapper)
+        MovieDetailsAction(movieDataRepository, imageIdToUrlMapper)
 
     private var _state = MutableStateFlow(UIState.defaultState())
     val state = _state.asStateFlow()

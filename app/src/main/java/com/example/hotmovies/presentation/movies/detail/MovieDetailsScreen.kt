@@ -93,10 +93,10 @@ fun SharedTransitionScope.MovieDetailsScreen(
             return@LaunchedEffect
         }
 
-        val loadMovieDetailsAction =
+        val consumableAction =
             loadMovieDetailsEvent.getContentIfNotHandled() ?: return@LaunchedEffect
         when {
-            loadMovieDetailsAction.isSuccessFalse -> onAction(
+            consumableAction.isSuccessFalse -> onAction(
                 MovieDetailsViewModel.Actions.LoadMovieDetails(
                     movieDetailItem.movieId
                 )

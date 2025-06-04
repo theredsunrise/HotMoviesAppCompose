@@ -14,6 +14,7 @@ import com.example.hotmovies.appplication.movies.interfaces.MovieImageIdToUrlMap
 import com.example.hotmovies.domain.Movie
 import com.example.hotmovies.presentation.movies.dtos.MovieUIState
 import com.example.hotmovies.presentation.movies.dtos.UserDetailsUIState
+import com.example.hotmovies.presentation.movies.dtos.pagingDataProgress
 import com.example.hotmovies.presentation.movies.list.viewModel.MoviesViewModel.Actions.LoadMovies
 import com.example.hotmovies.presentation.movies.list.viewModel.MoviesViewModel.Actions.LoadUserDetails
 import com.example.hotmovies.presentation.movies.list.viewModel.MoviesViewModel.Actions.Logout
@@ -29,11 +30,15 @@ import com.example.hotmovies.shared.progressEvent
 import com.example.hotmovies.shared.stateEvent
 import com.example.hotmovies.shared.stateEventFailure
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlin.time.Duration.Companion.hours
 
 class MoviesViewModel(
     resources: Resources,
@@ -65,22 +70,24 @@ class MoviesViewModel(
     }
 
     private val logoutAction = LogoutAction(
-        viewModelScope,
         loginRepository,
         settingsRepository
     )
     private val moviesAction = MoviesAction(
-        viewModelScope,
         moviePager,
         imageIdToUrlMapper,
         viewModelScope
     )
     private val userDetailsAction =
-        UserDetailsAction(viewModelScope, movieDataRepository)
+        UserDetailsAction(movieDataRepository)
 
     private var _state = MutableStateFlow(UIState.defaultState())
     val state = _state.asStateFlow()
     val moviesPagingData: StateFlow<PagingData<MovieUIState>> = moviesAction.state
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(1.hours), pagingDataProgress
+        )
 
     init {
         userDetailsAction.state.onEach { result ->
