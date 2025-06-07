@@ -1,9 +1,9 @@
-package com.example.hotmovies.infrastructure.dataRepository.tmdb
+package com.example.hotmovies.infrastructure.data.tmdb
 
 import com.example.hotmovies.BuildConfig
-import com.example.hotmovies.infrastructure.dataRepository.tmdb.dtos.MovieDetailsDto
-import com.example.hotmovies.infrastructure.dataRepository.tmdb.dtos.MoviesInfoDto
-import com.example.hotmovies.infrastructure.dataRepository.tmdb.dtos.UserDto
+import com.example.hotmovies.infrastructure.data.tmdb.dtos.MovieDetailsDto
+import com.example.hotmovies.infrastructure.data.tmdb.dtos.MoviesInfoDto
+import com.example.hotmovies.infrastructure.data.tmdb.dtos.UserDto
 import com.example.hotmovies.shared.toUse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -17,7 +17,7 @@ import retrofit2.http.Query
 
 interface TmdbMovieDataApiInterface {
     @GET("3/account/{accountId}")
-    suspend fun getUser(@Path("accountId") accountId: String): retrofit2.Response<UserDto>
+    suspend fun getUser(@Query("session_id") sessionId: String): retrofit2.Response<UserDto>
 
     @GET("3/movie/{movieId}")
     suspend fun getMovieDetails(@Path("movieId") movieId: Int): retrofit2.Response<MovieDetailsDto>
@@ -31,10 +31,7 @@ private class AuthorizationInterceptor : Interceptor {
         val request = chain.request()
         val newUrl = request.url.newBuilder()
             .addQueryParameter("api_key", BuildConfig.TMDB_API_KEY.toUse(12)).build()
-        val newRequest = request.newBuilder().url(newUrl).addHeader(
-            "Authorization",
-            "Bearer ${BuildConfig.TMDB_BEARER.toUse(45)}"
-        ).build()
+        val newRequest = request.newBuilder().url(newUrl).build()
         return chain.proceed(newRequest)
     }
 }

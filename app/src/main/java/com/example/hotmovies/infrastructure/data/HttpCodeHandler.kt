@@ -1,4 +1,4 @@
-package com.example.hotmovies.infrastructure.dataRepository
+package com.example.hotmovies.infrastructure.data
 
 object HttpMapper {
     fun getMessage(statusCode: Int): String = when (statusCode) {

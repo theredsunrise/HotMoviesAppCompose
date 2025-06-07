@@ -2,7 +2,7 @@ package com.example.hotmovies.presentation.login.initialization.viewModel
 
 import TestException
 import com.example.hotmovies.appplication.login.interfaces.LoginRepositoryInterface
-import com.example.hotmovies.appplication.login.interfaces.SettingsRepositoryInterface
+import com.example.hotmovies.appplication.login.interfaces.SecureRepositoryInterface
 import com.example.hotmovies.shared.Event
 import com.example.hotmovies.shared.ResultState
 import common.MainDispatcherRule
@@ -38,19 +38,19 @@ class InitializationViewModelTest {
     lateinit var loginRepository: LoginRepositoryInterface
 
     @MockK
-    lateinit var settingsRepository: SettingsRepositoryInterface
+    lateinit var secureRepository: SecureRepositoryInterface
 
     @Test
     fun `session validity, check if the login session is valid, succeeded`() = runTest {
         coEvery { loginRepository.isSessionValid(token) } returns
                 flowOf(true)
 
-        coEvery { settingsRepository.getStringValue(SettingsRepositoryInterface.Keys.AUTH_TOKEN_KEY) } returns flowOf(
+        coEvery { secureRepository.getStringValue(SecureRepositoryInterface.Keys.AUTH_TOKEN_KEY) } returns flowOf(
             token
         )
         coEvery {
-            settingsRepository.store(
-                SettingsRepositoryInterface.Keys.AUTH_TOKEN_KEY,
+            secureRepository.store(
+                SecureRepositoryInterface.Keys.AUTH_TOKEN_KEY,
                 any()
             )
         } returns flowOf(Unit)
@@ -69,7 +69,7 @@ class InitializationViewModelTest {
 
         coVerifyAll {
             loginRepository.isSessionValid(any())
-            settingsRepository.getStringValue(any())
+            secureRepository.getStringValue(any())
         }
     }
 
@@ -78,12 +78,12 @@ class InitializationViewModelTest {
         coEvery { loginRepository.isSessionValid(token) } returns
                 flowOf(false)
 
-        coEvery { settingsRepository.getStringValue(SettingsRepositoryInterface.Keys.AUTH_TOKEN_KEY) } returns flowOf(
+        coEvery { secureRepository.getStringValue(SecureRepositoryInterface.Keys.AUTH_TOKEN_KEY) } returns flowOf(
             token
         )
         coEvery {
-            settingsRepository.store(
-                SettingsRepositoryInterface.Keys.AUTH_TOKEN_KEY,
+            secureRepository.store(
+                SecureRepositoryInterface.Keys.AUTH_TOKEN_KEY,
                 any()
             )
         } returns flowOf(Unit)
@@ -102,7 +102,7 @@ class InitializationViewModelTest {
 
         coVerifyAll {
             loginRepository.isSessionValid(any())
-            settingsRepository.getStringValue(any())
+            secureRepository.getStringValue(any())
         }
     }
 
@@ -111,12 +111,12 @@ class InitializationViewModelTest {
 
         coEvery { loginRepository.isSessionValid(token) } throws testException
 
-        coEvery { settingsRepository.getStringValue(SettingsRepositoryInterface.Keys.AUTH_TOKEN_KEY) } returns flowOf(
+        coEvery { secureRepository.getStringValue(SecureRepositoryInterface.Keys.AUTH_TOKEN_KEY) } returns flowOf(
             token
         )
         coEvery {
-            settingsRepository.store(
-                SettingsRepositoryInterface.Keys.AUTH_TOKEN_KEY,
+            secureRepository.store(
+                SecureRepositoryInterface.Keys.AUTH_TOKEN_KEY,
                 any()
             )
         } returns flowOf(Unit)
@@ -135,7 +135,7 @@ class InitializationViewModelTest {
 
         coVerifyAll {
             loginRepository.isSessionValid(any())
-            settingsRepository.getStringValue(any())
+            secureRepository.getStringValue(any())
         }
     }
 
@@ -144,17 +144,17 @@ class InitializationViewModelTest {
 
         coEvery { loginRepository.isSessionValid(token) } returns flowOf(true)
 
-        coEvery { settingsRepository.getStringValue(SettingsRepositoryInterface.Keys.AUTH_TOKEN_KEY) } returns
+        coEvery { secureRepository.getStringValue(SecureRepositoryInterface.Keys.AUTH_TOKEN_KEY) } returns
                 flow {
-                    throw SettingsRepositoryInterface.Exceptions.NoValueException(
+                    throw SecureRepositoryInterface.Exceptions.NoValueException(
                         "Key",
                         Boolean::class.java
                     )
                 }
 
         coEvery {
-            settingsRepository.store(
-                SettingsRepositoryInterface.Keys.AUTH_TOKEN_KEY,
+            secureRepository.store(
+                SecureRepositoryInterface.Keys.AUTH_TOKEN_KEY,
                 any()
             )
         } returns flowOf(Unit)
@@ -172,7 +172,7 @@ class InitializationViewModelTest {
         )
 
         coVerifyAll {
-            settingsRepository.getStringValue(any())
+            secureRepository.getStringValue(any())
         }
     }
 
@@ -181,14 +181,14 @@ class InitializationViewModelTest {
 
         coEvery { loginRepository.isSessionValid(token) } returns flowOf(true)
 
-        coEvery { settingsRepository.getStringValue(SettingsRepositoryInterface.Keys.AUTH_TOKEN_KEY) } returns
+        coEvery { secureRepository.getStringValue(SecureRepositoryInterface.Keys.AUTH_TOKEN_KEY) } returns
                 flow {
                     throw testException
                 }
 
         coEvery {
-            settingsRepository.store(
-                SettingsRepositoryInterface.Keys.AUTH_TOKEN_KEY,
+            secureRepository.store(
+                SecureRepositoryInterface.Keys.AUTH_TOKEN_KEY,
                 any()
             )
         } returns flowOf(Unit)
@@ -206,7 +206,7 @@ class InitializationViewModelTest {
         )
 
         coVerifyAll {
-            settingsRepository.getStringValue(any())
+            secureRepository.getStringValue(any())
         }
     }
 
@@ -214,7 +214,7 @@ class InitializationViewModelTest {
     private fun TestScope.listenToStatesOfViewModel(): MutableList<Event<ResultState<Boolean>>> {
         val viewModel = InitializationViewModel(
             loginRepository,
-            settingsRepository,
+            secureRepository,
             mainDispatcherRule.testDispatcher
         )
 

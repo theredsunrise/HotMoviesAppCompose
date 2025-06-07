@@ -47,6 +47,7 @@ import com.example.hotmovies.presentation.shared.LocalSharedTransitionScope
 import com.example.hotmovies.presentation.shared.views.CustomDialogState
 import com.example.hotmovies.presentation.shared.views.showDialog
 import com.example.hotmovies.shared.Constants
+import com.example.hotmovies.shared.getMessage
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -92,7 +93,7 @@ fun NavGraphBuilder.moviesGraph(
                     diContainer.pager,
                     diContainer.movieImageIdToUrlMapper,
                     diContainer.loginRepository,
-                    diContainer.settingsRepository,
+                    diContainer.secureRepository,
                     diContainer.movieDataRepository
                 )
             }
@@ -143,7 +144,7 @@ fun NavGraphBuilder.moviesGraph(
                             )
                         }) { source, exception ->
                         errorDialogState.value =
-                            CustomDialogState(source, exception.message.orEmpty())
+                            CustomDialogState(source, exception.getMessage())
                     }
                 }
             }
@@ -184,7 +185,7 @@ fun NavGraphBuilder.moviesGraph(
                         viewModel::doAction,
                         onLegacyBackPress = { navController.popBackStack() }
                     ) {
-                        errorDialogState.value = CustomDialogState(0, it.message.orEmpty())
+                        errorDialogState.value = CustomDialogState(0, it.getMessage())
                     }
                 }
             }

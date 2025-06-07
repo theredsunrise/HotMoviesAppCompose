@@ -1,7 +1,9 @@
 package com.example.hotmovies.appplication.login
 
 import com.example.hotmovies.appplication.login.interfaces.LoginRepositoryInterface
-import com.example.hotmovies.appplication.login.interfaces.SettingsRepositoryInterface
+import com.example.hotmovies.appplication.login.interfaces.SecureRepositoryInterface
+import com.example.hotmovies.appplication.login.interfaces.SecureRepositoryInterface.Exceptions.NoValueException
+import com.example.hotmovies.appplication.login.interfaces.SecureRepositoryInterface.Keys.AUTH_TOKEN_KEY
 import com.example.hotmovies.shared.ResultState
 import com.example.hotmovies.shared.asStateResult
 import com.example.hotmovies.shared.checkNotMainThread
@@ -15,18 +17,18 @@ import kotlinx.coroutines.flow.flowOn
 @OptIn(ExperimentalCoroutinesApi::class)
 class SessionValidityUseCase(
     private val loginRepository: LoginRepositoryInterface,
-    private val settingsRepository: SettingsRepositoryInterface,
+    private val secureRepository: SecureRepositoryInterface,
     private val dispatcher: CoroutineDispatcher
 ) {
 
     operator fun invoke(): Flow<ResultState<Boolean>> =
-        settingsRepository.getStringValue(SettingsRepositoryInterface.Keys.AUTH_TOKEN_KEY)
+        secureRepository.getStringValue(AUTH_TOKEN_KEY)
             .flatMapLatest { token ->
                 checkNotMainThread()
                 loginRepository.isSessionValid(token)
             }
             .catch { e ->
-                if (e !is SettingsRepositoryInterface.Exceptions.NoValueException) throw e
+                if (e !is NoValueException) throw e
                 emit(false)
             }
             .asStateResult().flowOn(dispatcher)

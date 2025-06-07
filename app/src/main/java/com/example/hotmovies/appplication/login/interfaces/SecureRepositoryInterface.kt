@@ -2,7 +2,7 @@ package com.example.hotmovies.appplication.login.interfaces
 
 import kotlinx.coroutines.flow.Flow
 
-interface SettingsRepositoryInterface {
+interface SecureRepositoryInterface {
     object Keys {
         const val AUTH_TOKEN_KEY = "authToken"
     }

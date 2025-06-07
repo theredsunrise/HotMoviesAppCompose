@@ -1,4 +1,4 @@
-package com.example.hotmovies.infrastructure.dataRepository.mock
+package com.example.hotmovies.infrastructure.data.mock
 
 import android.content.Context
 import android.graphics.BitmapFactory

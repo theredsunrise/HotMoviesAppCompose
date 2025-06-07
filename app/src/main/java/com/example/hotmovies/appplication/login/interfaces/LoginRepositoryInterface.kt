@@ -7,12 +7,11 @@ import kotlinx.coroutines.flow.Flow
 interface LoginRepositoryInterface {
     sealed class Exceptions(msg: String) : Exception(msg) {
         class NoNetworkConnectionException : Exceptions("No network connection is available.")
-        class InvalidCredentialsException : Exceptions("Invalid user name or password.")
     }
 
     fun login(userName: LoginUserName, password: LoginPassword): Flow<String>
 
-    fun logout(): Flow<Unit>
+    fun logout(sessionId: String): Flow<Boolean>
 
-    fun isSessionValid(token: String): Flow<Boolean>
+    fun isSessionValid(sessionId: String): Flow<Boolean>
 }

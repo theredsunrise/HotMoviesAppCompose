@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingData
 import com.example.hotmovies.appplication.login.interfaces.LoginRepositoryInterface
-import com.example.hotmovies.appplication.login.interfaces.SettingsRepositoryInterface
+import com.example.hotmovies.appplication.login.interfaces.SecureRepositoryInterface
 import com.example.hotmovies.appplication.movies.interfaces.MovieDataRepositoryInterface
 import com.example.hotmovies.appplication.movies.interfaces.MovieImageIdToUrlMapperInterface
 import com.example.hotmovies.domain.Movie
@@ -45,7 +45,7 @@ class MoviesViewModel(
     moviePager: Pager<Int, Movie>,
     imageIdToUrlMapper: MovieImageIdToUrlMapperInterface,
     loginRepository: LoginRepositoryInterface,
-    settingsRepository: SettingsRepositoryInterface,
+    secureRepository: SecureRepositoryInterface,
     movieDataRepository: MovieDataRepositoryInterface
 ) : ViewModel() {
 
@@ -71,7 +71,7 @@ class MoviesViewModel(
 
     private val logoutAction = LogoutAction(
         loginRepository,
-        settingsRepository
+        secureRepository
     )
     private val moviesAction = MoviesAction(
         moviePager,

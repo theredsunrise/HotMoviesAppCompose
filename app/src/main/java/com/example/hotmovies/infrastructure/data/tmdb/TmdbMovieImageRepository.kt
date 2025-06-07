@@ -1,9 +1,9 @@
-package com.example.hotmovies.infrastructure.dataRepository.tmdb
+package com.example.hotmovies.infrastructure.data.tmdb
 
 import android.graphics.Bitmap
 import com.example.hotmovies.appplication.login.interfaces.MovieImageRepositoryInterface
 import com.example.hotmovies.appplication.login.interfaces.MovieImageRepositoryInterface.Exceptions.HttpException
-import com.example.hotmovies.infrastructure.dataRepository.HttpMapper
+import com.example.hotmovies.infrastructure.data.HttpMapper
 import com.example.hotmovies.shared.checkNotMainThread
 import com.example.hotmovies.shared.toBitmap
 import kotlinx.coroutines.flow.Flow

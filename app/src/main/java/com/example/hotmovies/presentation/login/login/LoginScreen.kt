@@ -63,6 +63,7 @@ import com.example.hotmovies.presentation.theme.colorPrimaryDarkerMiddle
 import com.example.hotmovies.presentation.theme.lobsterFontFamily
 import com.example.hotmovies.shared.Constants
 import com.example.hotmovies.shared.checkMainThread
+import com.example.hotmovies.shared.getMessage
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -129,7 +130,7 @@ fun SharedTransitionScope.LoginScreen(
             {
                 CustomTextFieldConfigurator(
                     isEnabled = loginState.value.isScreenEnabled,
-                    error = loginState.value.userNameText.exception?.localizedMessage,
+                    error = loginState.value.userNameText.exception?.getMessage(),
                     isAnimated = animate.value != 0f,
                     animatedProgress = animate.value
                 )
@@ -147,7 +148,7 @@ fun SharedTransitionScope.LoginScreen(
             {
                 CustomTextFieldConfigurator(
                     isEnabled = loginState.value.isScreenEnabled,
-                    error = loginState.value.passwordText.exception?.localizedMessage,
+                    error = loginState.value.passwordText.exception?.getMessage(),
                     isPassword = true,
                     isAnimated = animate.value != 0f,
                     animatedProgress = animate.value

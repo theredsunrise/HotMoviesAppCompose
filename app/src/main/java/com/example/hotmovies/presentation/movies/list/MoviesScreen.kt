@@ -44,6 +44,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
@@ -267,6 +268,8 @@ fun SharedTransitionScope.MoviesScreen(
             Text(
                 moviesState.value.userDetails.name,
                 style = MaterialTheme.typography.displayMedium,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
                 modifier = Modifier
                     .layoutId("name")
                     .alpha(if (isShowContentAfterInitialTransition) 1f else 0f),
@@ -275,6 +278,8 @@ fun SharedTransitionScope.MoviesScreen(
             Text(
                 moviesState.value.userDetails.userName,
                 style = MaterialTheme.typography.displaySmall,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
                 modifier = Modifier
                     .layoutId("username")
                     .alpha(if (isShowContentAfterInitialTransition) 1f else 0f),
@@ -284,6 +289,8 @@ fun SharedTransitionScope.MoviesScreen(
             Text(
                 moviesState.value.userDetails.overview,
                 style = MaterialTheme.typography.headlineSmall,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 3,
                 modifier = Modifier
                     .layoutId("description")
                     .alpha(if (isShowContentAfterInitialTransition) 1f else 0f),
@@ -294,6 +301,8 @@ fun SharedTransitionScope.MoviesScreen(
                 moviesState.value.userDetails.name,
                 style = MaterialTheme.typography.displayMedium,
                 fontFamily = lobsterFontFamily(),
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
                 modifier = Modifier
                     .layoutId("name")
                     .alpha(if (isShowContentAfterInitialTransition) 1f else 0f),
@@ -302,6 +311,8 @@ fun SharedTransitionScope.MoviesScreen(
             Text(
                 moviesState.value.userDetails.userName,
                 style = MaterialTheme.typography.displaySmall,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
                 modifier = Modifier
                     .layoutId("username")
                     .alpha(if (isShowContentAfterInitialTransition) 1f else 0f),
@@ -311,6 +322,8 @@ fun SharedTransitionScope.MoviesScreen(
             Text(
                 moviesState.value.userDetails.overview,
                 style = MaterialTheme.typography.headlineSmall,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 3,
                 modifier = Modifier
                     .layoutId("description")
                     .alpha(if (isShowContentAfterInitialTransition) 1f else 0f),

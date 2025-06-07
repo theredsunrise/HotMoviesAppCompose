@@ -38,8 +38,6 @@ android {
             load(FileInputStream(rootProject.file("tmdb.properties")))
         }
         buildConfigField("TMDB_API_KEY", (tmdbProperties["apiKey"] as String).encrypt(12))
-        buildConfigField("TMDB_BEARER", (tmdbProperties["bearer"] as String).encrypt(45))
-        buildConfigField("TMDB_ACCOUNT_ID", (tmdbProperties["accountId"] as String).encrypt(32))
     }
 
     buildTypes {

@@ -1,5 +1,6 @@
 package com.example.hotmovies.presentation.login.navigation
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -19,6 +20,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.navDeepLink
 import com.example.hotmovies.CustomApplication
 import com.example.hotmovies.presentation.login.initialization.InitializationScreen
 import com.example.hotmovies.presentation.login.initialization.viewModel.InitializationViewModel
@@ -33,6 +35,7 @@ import com.example.hotmovies.presentation.shared.LocalSharedTransitionScope
 import com.example.hotmovies.presentation.shared.views.CustomDialogState
 import com.example.hotmovies.presentation.shared.views.showDialog
 import com.example.hotmovies.shared.Constants
+import com.example.hotmovies.shared.getMessage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
 
@@ -42,7 +45,7 @@ data object LoginGraph
 @Serializable
 private sealed interface LoginGraphRoutes {
     @Serializable
-    data object Login : LoginGraphRoutes
+    data class Login(val redirectParams: String? = null) : LoginGraphRoutes
 
     @Serializable
     data object SessionValidity : LoginGraphRoutes
@@ -50,6 +53,7 @@ private sealed interface LoginGraphRoutes {
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 fun NavGraphBuilder.loginGraph(
+    redirectUri: String,
     navController: NavController
 ) {
     navigation<LoginGraph>(startDestination = SessionValidity) {
@@ -59,18 +63,14 @@ fun NavGraphBuilder.loginGraph(
                 val diContainer = CustomApplication.diContainer
                 InitializationViewModel(
                     diContainer.loginRepository,
-                    diContainer.settingsRepository,
+                    diContainer.secureRepository,
                     Dispatchers.IO
                 )
             }
 
+            val activity = LocalActivity.current
             val errorDialogState = showDialog(onCancel = { _ ->
-                val appGraphId = navController.graph.startDestinationId
-                navController.navigate(appGraphId) {
-                    popUpTo(appGraphId) {
-                        inclusive = true
-                    }
-                }
+                activity?.finish()
             }) {
                 viewModel.doAction(CheckSessionValidity)
             }
@@ -84,7 +84,7 @@ fun NavGraphBuilder.loginGraph(
                                 inclusive = true
                             }
                         }
-                    } else navController.navigate(Login) {
+                    } else navController.navigate(Login()) {
                         val appGraphId = navController.graph.startDestinationId
                         popUpTo(appGraphId) {
                             inclusive = true
@@ -92,10 +92,15 @@ fun NavGraphBuilder.loginGraph(
                     }
 
                 }, onError = {
-                    errorDialogState.value = CustomDialogState(0, it.message.orEmpty())
+                    errorDialogState.value = CustomDialogState(0, it.getMessage())
                 })
         }
         composable<Login>(
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "${redirectUri}/login?{redirectParams}"
+                }
+            ),
             enterTransition = {
                 fadeIn(
                     initialAlpha = 0.0f,
@@ -114,7 +119,7 @@ fun NavGraphBuilder.loginGraph(
                 LoginViewModel(
                     createSavedStateHandle(),
                     diContainer.loginRepository,
-                    diContainer.settingsRepository
+                    diContainer.secureRepository
                 )
             }
 

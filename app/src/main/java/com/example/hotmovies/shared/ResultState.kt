@@ -76,7 +76,7 @@ sealed interface ResultState<out T> {
             is Progress -> "Progress"
             is Success -> value.toString()
             is Failure -> {
-                this.exception.message.orEmpty()
+                this.exception.getMessage()
             }
         }
     }

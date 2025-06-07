@@ -1,4 +1,4 @@
-package com.example.hotmovies.infrastructure.dataRepository.tmdb
+package com.example.hotmovies.infrastructure.data.tmdb
 
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody

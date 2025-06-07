@@ -21,8 +21,17 @@
             android:theme="@style/Theme.HotMoviesAppCompose">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.hotmovies.com"
+                    android:scheme="tmdb" />
             </intent-filter>
         </activity>
         <meta-data

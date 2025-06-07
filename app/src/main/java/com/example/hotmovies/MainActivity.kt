@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity(), UserInteractionConfigurableComponent {
                                 popEnterTransition = { EnterTransition.None }
                             )
                             {
-                                loginGraph(navController)
+                                loginGraph(getString(R.string.redirect_uri), navController)
                                 moviesGraph(navController)
                             }
                         }

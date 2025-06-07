@@ -1,6 +1,5 @@
 package com.example.hotmovies.presentation.movies.list.views
 
-import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope

@@ -1,7 +1,8 @@
 package com.example.hotmovies.appplication.login
 
 import com.example.hotmovies.appplication.login.interfaces.LoginRepositoryInterface
-import com.example.hotmovies.appplication.login.interfaces.SettingsRepositoryInterface
+import com.example.hotmovies.appplication.login.interfaces.SecureRepositoryInterface
+import com.example.hotmovies.appplication.login.interfaces.SecureRepositoryInterface.Keys.AUTH_TOKEN_KEY
 import com.example.hotmovies.domain.LoginPassword
 import com.example.hotmovies.domain.LoginUserName
 import com.example.hotmovies.shared.ResultState
@@ -18,7 +19,7 @@ import kotlinx.coroutines.flow.flowOn
 @OptIn(ExperimentalCoroutinesApi::class)
 class LoginUserUseCase(
     private val loginRepository: LoginRepositoryInterface,
-    private val settingsRepository: SettingsRepositoryInterface,
+    private val secureRepository: SecureRepositoryInterface,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
 ) {
 
@@ -37,8 +38,8 @@ class LoginUserUseCase(
 
     }.flatMapLatest { token ->
         checkNotMainThread()
-        settingsRepository.store(
-            SettingsRepositoryInterface.Keys.AUTH_TOKEN_KEY,
+        secureRepository.store(
+            AUTH_TOKEN_KEY,
             token
         )
 

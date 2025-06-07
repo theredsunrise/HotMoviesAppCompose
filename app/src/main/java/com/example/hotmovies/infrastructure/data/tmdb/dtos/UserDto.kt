@@ -1,4 +1,4 @@
-package com.example.hotmovies.infrastructure.dataRepository.tmdb.dtos
+package com.example.hotmovies.infrastructure.data.tmdb.dtos
 
 import android.graphics.Bitmap
 import com.example.hotmovies.domain.User
