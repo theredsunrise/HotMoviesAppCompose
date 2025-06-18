@@ -53,7 +53,8 @@ import androidx.constraintlayout.compose.MotionLayout
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.PagingData
 import com.example.hotmovies.R
-import com.example.hotmovies.appplication.DIContainer
+import com.example.hotmovies.infrastructure.data.mock.MockMovieDataRepository
+import com.example.hotmovies.infrastructure.mappers.tmdb.TmdbMovieIdToUrlMapper
 import com.example.hotmovies.presentation.movies.dtos.MovieUIMapper
 import com.example.hotmovies.presentation.movies.dtos.MovieUIState
 import com.example.hotmovies.presentation.movies.dtos.pagingDataProgress
@@ -368,10 +369,12 @@ private fun MoviesScreenPreview() {
 
         val context = LocalContext.current
         val pagingDataFlow = remember {
-            val diContainer = DIContainer(context)
-            val uiMapper = MovieUIMapper(diContainer.movieImageIdToUrlMapper)
 
-            diContainer.previewMovieDataRepository
+            val previewMovieDataRepository =
+                MockMovieDataRepository(context, R.drawable.vector_background, false)
+            val uiMapper = MovieUIMapper(TmdbMovieIdToUrlMapper())
+
+            previewMovieDataRepository
                 .getTrendingMoviesInfo(1, 20)
                 .map { movieInfo ->
                     PagingData.from(movieInfo.results.map {

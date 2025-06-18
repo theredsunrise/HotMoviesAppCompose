@@ -13,6 +13,10 @@ class LoginAction(
 ) :
     BaseResultStateViewModelAction<LoginUserUseCase.Credentials, Unit>() {
 
+    init {
+        println("******* ${this::class.simpleName}")
+    }
+
     override fun action(value: LoginUserUseCase.Credentials): Flow<ResultState<Unit>> {
         return LoginUserUseCase(loginRepository, secureRepository)(value)
     }

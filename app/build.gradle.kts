@@ -1,5 +1,7 @@
 import com.android.build.api.dsl.VariantDimension
 import com.example.shared.encrypt
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -8,6 +10,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serializable)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -60,10 +64,31 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    testOptions {
+        this.unitTests.all {
+            it.testLogging {
+                events(
+                    TestLogEvent.FAILED,
+                    TestLogEvent.PASSED,
+                    TestLogEvent.SKIPPED,
+                    TestLogEvent.STANDARD_ERROR,
+                    TestLogEvent.STANDARD_OUT
+                )
+                exceptionFormat = TestExceptionFormat.FULL
+                showCauses = true
+                showExceptions = true
+                showStackTraces = true
+            }
+        }
+    }
     buildFeatures {
         compose = true
         buildConfig = true
     }
+}
+
+tasks.withType(JavaCompile::class.java) {
+    options.compilerArgs.add("-Xlint:deprecation")
 }
 
 tasks.withType<Test> {
@@ -119,4 +144,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     releaseCompileOnly(libs.androidx.ui.tooling.preview)
     releaseCompileOnly(libs.androidx.ui.tooling)
+    implementation(libs.hilt)
+    implementation(libs.hilt.compose)
+
+    ksp(libs.ksp)
 }

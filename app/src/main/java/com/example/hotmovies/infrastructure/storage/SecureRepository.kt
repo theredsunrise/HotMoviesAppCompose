@@ -13,12 +13,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class SecureRepository(
+class SecureRepository @Inject constructor(
     private val crypto: CryptoInterface,
     private val dataStore: DataStore<Preferences>
 ) :
     SecureRepositoryInterface {
+
+    init {
+        println("******* ${this::class.simpleName}")
+    }
 
     override fun getStringValue(key: String): Flow<String> = flow {
         val value = dataStore.data.map { preferences ->

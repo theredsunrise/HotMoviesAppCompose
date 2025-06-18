@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 @OptIn(ExperimentalCoroutinesApi::class)
+
 class LoginUserUseCase(
     private val loginRepository: LoginRepositoryInterface,
     private val secureRepository: SecureRepositoryInterface,

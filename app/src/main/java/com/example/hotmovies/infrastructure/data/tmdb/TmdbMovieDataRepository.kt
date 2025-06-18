@@ -15,19 +15,26 @@ import com.example.hotmovies.infrastructure.NetworkStatusResolver
 import com.example.hotmovies.shared.checkNotMainThread
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.transformLatest
 import retrofit2.Response
+import javax.inject.Inject
 
-class TmdbMovieDataRepository(
-    private val appContext: Context,
+class TmdbMovieDataRepository @Inject constructor(
+    @ApplicationContext private val appContext: Context,
     private val dataApiService: TmdbMovieDataApiInterface,
     private val imageRepository: MovieImageRepositoryInterface,
     private val secureRepository: SecureRepositoryInterface
 ) : MovieDataRepositoryInterface {
+
+    init {
+        println("******* ${this::class.simpleName}")
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun getUser(): Flow<User> =

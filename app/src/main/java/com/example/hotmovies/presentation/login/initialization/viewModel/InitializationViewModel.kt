@@ -7,11 +7,14 @@ import com.example.hotmovies.appplication.login.interfaces.SecureRepositoryInter
 import com.example.hotmovies.presentation.login.initialization.viewModel.InitializationViewModel.Actions.CheckSessionValidity
 import com.example.hotmovies.presentation.login.initialization.viewModel.actions.SessionValidityAction
 import com.example.hotmovies.shared.eventNone
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-class InitializationViewModel(
+@HiltViewModel
+class InitializationViewModel @Inject constructor(
     loginRepository: LoginRepositoryInterface,
     secureRepository: SecureRepositoryInterface,
     dispatcher: CoroutineDispatcher

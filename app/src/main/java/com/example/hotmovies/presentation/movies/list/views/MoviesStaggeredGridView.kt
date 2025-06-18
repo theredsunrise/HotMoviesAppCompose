@@ -33,7 +33,8 @@ import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.example.hotmovies.R
-import com.example.hotmovies.appplication.DIContainer
+import com.example.hotmovies.infrastructure.data.mock.MockMovieDataRepository
+import com.example.hotmovies.infrastructure.mappers.tmdb.TmdbMovieIdToUrlMapper
 import com.example.hotmovies.presentation.movies.dtos.MovieUIMapper
 import com.example.hotmovies.presentation.movies.dtos.MovieUIState
 import com.example.hotmovies.presentation.shared.LocalAppState
@@ -161,15 +162,17 @@ private fun resolveHeightOfItem(positionOfItem: Int): Dp {
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
-private fun MoviesGridView() {
+private fun MoviesGridViewPreview() {
 
     PreviewSharingTransitionScreen { insetsPadding ->
         val context = LocalContext.current
         val pagingDataFlow = remember {
-            val diContainer = DIContainer(context)
-            val uiMapper = MovieUIMapper(diContainer.movieImageIdToUrlMapper)
 
-            diContainer.previewMovieDataRepository
+            val previewMovieDataRepository =
+                MockMovieDataRepository(context, R.drawable.vector_background, false)
+            val uiMapper = MovieUIMapper(TmdbMovieIdToUrlMapper())
+
+            previewMovieDataRepository
                 .getTrendingMoviesInfo(1, 20)
                 .map { movieInfo ->
                     PagingData.from(movieInfo.results.map {

@@ -13,11 +13,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+
 class MoviesAction(
     private val moviePager: Pager<Int, Movie>,
     imageIdToUrlMapper: MovieImageIdToUrlMapperInterface,
     private val cacheCoroutineScope: CoroutineScope
 ) : BaseViewModelAction<Unit, PagingData<MovieUIState>>(1) {
+
+    init {
+        println("******* ${this::class.simpleName}")
+    }
 
     private val uiMapper = MovieUIMapper(imageIdToUrlMapper)
 

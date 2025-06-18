@@ -23,11 +23,13 @@ import com.example.hotmovies.presentation.login.navigation.loginGraph
 import com.example.hotmovies.presentation.movies.navigation.moviesGraph
 import com.example.hotmovies.presentation.shared.LocalSharedTransitionScope
 import com.example.hotmovies.presentation.theme.HotMoviesAppComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 interface UserInteractionConfigurableComponent {
     var isEnabled: Boolean
 }
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity(), UserInteractionConfigurableComponent {
 
     override var isEnabled: Boolean = true

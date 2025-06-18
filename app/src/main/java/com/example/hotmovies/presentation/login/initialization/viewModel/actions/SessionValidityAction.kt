@@ -21,6 +21,10 @@ class SessionValidityAction(
         onStart = onStart
     ) {
 
+    init {
+        println("******* ${this::class.simpleName}")
+    }
+
     override fun action(value: Unit): Flow<Event<ResultState<Boolean>>> {
         return SessionValidityUseCase(loginRepository, secureRepository, dispatcher)()
             .map { Event(it) }

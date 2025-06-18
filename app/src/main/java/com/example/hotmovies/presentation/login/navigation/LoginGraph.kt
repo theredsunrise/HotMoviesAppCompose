@@ -13,15 +13,13 @@ import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.createSavedStateHandle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.navDeepLink
-import com.example.hotmovies.CustomApplication
 import com.example.hotmovies.presentation.login.initialization.InitializationScreen
 import com.example.hotmovies.presentation.login.initialization.viewModel.InitializationViewModel
 import com.example.hotmovies.presentation.login.initialization.viewModel.InitializationViewModel.Actions.CheckSessionValidity
@@ -36,7 +34,6 @@ import com.example.hotmovies.presentation.shared.views.CustomDialogState
 import com.example.hotmovies.presentation.shared.views.showDialog
 import com.example.hotmovies.shared.Constants
 import com.example.hotmovies.shared.getMessage
-import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -59,14 +56,15 @@ fun NavGraphBuilder.loginGraph(
     navigation<LoginGraph>(startDestination = SessionValidity) {
         composable<SessionValidity> {
 
-            val viewModel: InitializationViewModel = viewModel {
-                val diContainer = CustomApplication.diContainer
-                InitializationViewModel(
-                    diContainer.loginRepository,
-                    diContainer.secureRepository,
-                    Dispatchers.IO
-                )
-            }
+            val viewModel: InitializationViewModel = hiltViewModel()
+//                viewModel {
+//                val diContainer = CustomApplication.diContainer
+//                InitializationViewModel(
+//                    diContainer.loginRepository,
+//                    diContainer.secureRepository,
+//                    Dispatchers.IO
+//                )
+//            }
 
             val activity = LocalActivity.current
             val errorDialogState = showDialog(onCancel = { _ ->
@@ -114,14 +112,15 @@ fun NavGraphBuilder.loginGraph(
                 )
             }
         ) {
-            val viewModel: LoginViewModel = viewModel {
-                val diContainer = CustomApplication.diContainer
-                LoginViewModel(
-                    createSavedStateHandle(),
-                    diContainer.loginRepository,
-                    diContainer.secureRepository
-                )
-            }
+            val viewModel: LoginViewModel = hiltViewModel()
+//                viewModel {
+//                val diContainer = CustomApplication.diContainer
+//                LoginViewModel(
+//                    createSavedStateHandle(),
+//                    diContainer.loginRepository,
+//                    diContainer.secureRepository
+//                )
+//            }
 
             with(LocalSharedTransitionScope.current) {
                 CompositionLocalProvider(LocalNavAnimatedVisibilityScope provides this@composable) {

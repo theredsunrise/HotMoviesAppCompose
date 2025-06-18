@@ -14,6 +14,7 @@ import com.example.hotmovies.shared.stateFailure
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+
 class MovieDetailsAction(
     private val movieDataRepository: MovieDataRepositoryInterface,
     imageIdToUrlMapper: MovieImageIdToUrlMapperInterface,
@@ -21,6 +22,10 @@ class MovieDetailsAction(
     BaseResultStateViewModelAction<Int, MovieDetailsUIState>() {
 
     private val uiMapper = MovieDetailsUIMapper(imageIdToUrlMapper)
+
+    init {
+        println("******* ${this::class.simpleName}")
+    }
 
     override fun action(value: Int): Flow<ResultState<MovieDetailsUIState>> {
         return MovieDetailsUseCase(movieDataRepository)(value).map {

@@ -5,14 +5,17 @@ import androidx.paging.PagingState
 import com.example.hotmovies.appplication.movies.interfaces.MovieDataRepositoryInterface
 import com.example.hotmovies.domain.Movie
 import com.example.hotmovies.shared.checkNotMainThread
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 import kotlin.math.max
 
-class MoviePagingSource(
+@ViewModelScoped
+class MoviePagingSource @Inject constructor(
     private val dataRepository: MovieDataRepositoryInterface,
     private val dispatcher: CoroutineDispatcher
 ) :

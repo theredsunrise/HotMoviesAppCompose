@@ -13,6 +13,10 @@ class LogoutAction(
 ) :
     BaseResultStateViewModelAction<Unit, Unit>() {
 
+    init {
+        println("******* ${this::class.simpleName}")
+    }
+
     override fun action(value: Unit): Flow<ResultState<Unit>> {
         return LogoutUserCase(loginRepository, secureRepository)()
     }

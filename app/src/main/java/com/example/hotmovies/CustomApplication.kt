@@ -1,14 +1,10 @@
 package com.example.hotmovies
 
 import android.app.Application
-import com.example.hotmovies.appplication.DIContainer
+import dagger.hilt.android.HiltAndroidApp
 
-class CustomApplication : Application() {
-    companion object {
-        lateinit var diContainer: DIContainer
-    }
+@HiltAndroidApp
+class CustomApplication : Application()
 
-    init {
-        diContainer = DIContainer(this)
-    }
-}
+
+

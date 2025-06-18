@@ -18,14 +18,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
-import com.example.hotmovies.CustomApplication
 import com.example.hotmovies.R
 import com.example.hotmovies.presentation.login.navigation.LoginGraph
 import com.example.hotmovies.presentation.movies.detail.MovieDetailItem
@@ -86,17 +85,18 @@ fun NavGraphBuilder.moviesGraph(
                 )
             }
         ) {
-            val viewModel: MoviesViewModel = viewModel {
-                val diContainer = CustomApplication.diContainer
-                MoviesViewModel(
-                    diContainer.appContext.resources,
-                    diContainer.pager,
-                    diContainer.movieImageIdToUrlMapper,
-                    diContainer.loginRepository,
-                    diContainer.secureRepository,
-                    diContainer.movieDataRepository
-                )
-            }
+            val viewModel: MoviesViewModel = hiltViewModel()
+//                viewModel {
+//                val diContainer = CustomApplication.diContainer
+//                MoviesViewModel(
+//                    diContainer.appContext.resources,
+//                    diContainer.pager,
+//                    diContainer.movieImageIdToUrlMapper,
+//                    diContainer.loginRepository,
+//                    diContainer.secureRepository,
+//                    diContainer.movieDataRepository
+//                )
+//            }
 
             val currentActivity = LocalActivity.current
             val exitDialogState = showDialog(android.R.string.ok) {
@@ -150,13 +150,14 @@ fun NavGraphBuilder.moviesGraph(
             }
         }
         composable<MovieDetail>() {
-            val viewModel: MovieDetailsViewModel = viewModel {
-                val diContainer = CustomApplication.diContainer
-                MovieDetailsViewModel(
-                    diContainer.movieDataRepository,
-                    diContainer.movieImageIdToUrlMapper
-                )
-            }
+            val viewModel: MovieDetailsViewModel = hiltViewModel()
+//                viewModel {
+//                val diContainer = CustomApplication.diContainer
+//                MovieDetailsViewModel(
+//                    diContainer.movieDataRepository,
+//                    diContainer.movieImageIdToUrlMapper
+//                )
+//            }
 
             val movieDetailItem = with(it.toRoute<MovieDetail>()) {
                 remember { MovieDetailItem(movieId, pageId, backDropUrl) }

@@ -8,13 +8,14 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
+import javax.inject.Inject
 
 interface CryptoInterface {
     fun encrypt(plainBytes: ByteArray): ByteArray
     fun decrypt(encryptedBytes: ByteArray): ByteArray
 }
 
-class Crypto : CryptoInterface {
+class Crypto @Inject constructor() : CryptoInterface {
     companion object {
         const val KEYSTORE_ALIAS = "HotMovies"
         const val KEYSTORE = "AndroidKeyStore"
@@ -24,6 +25,10 @@ class Crypto : CryptoInterface {
         private const val BLOCK_MODE = KeyProperties.BLOCK_MODE_GCM
         private const val PADDING = KeyProperties.ENCRYPTION_PADDING_NONE
         private const val TRANSFORMATION = "$ALGORITHM/$BLOCK_MODE/$PADDING"
+    }
+
+    init {
+        println("******* ${this::class.simpleName}")
     }
 
     private val keyStore = KeyStore.getInstance(KEYSTORE).apply { load(null) }

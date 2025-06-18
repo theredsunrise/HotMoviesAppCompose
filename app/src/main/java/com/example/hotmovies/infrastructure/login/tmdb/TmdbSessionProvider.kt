@@ -2,6 +2,7 @@ package com.example.hotmovies.infrastructure.login.tmdb
 
 import android.content.Context
 import androidx.core.net.toUri
+import com.example.hotmovies.di.TmdbModuleRedirectUri
 import com.example.hotmovies.infrastructure.NetworkStatusResolver
 import com.example.hotmovies.infrastructure.login.SessionProviderInterface
 import com.example.hotmovies.infrastructure.login.SessionProviderInterface.Exceptions.FailedToDeleteSessionException
@@ -12,13 +13,15 @@ import com.example.hotmovies.infrastructure.login.tmdb.dtos.DeleteSessionRequest
 import com.example.hotmovies.shared.checkNotMainThread
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
+import javax.inject.Inject
 
-class TmdbSessionProvider(
-    private val appContext: Context,
-    private val redirectUri: String,
+class TmdbSessionProvider @Inject constructor(
+    @ApplicationContext private val appContext: Context,
+    @TmdbModuleRedirectUri private val redirectUri: String,
     private val api: TmdbAuthenticationApiInterface
 ) : SessionProviderInterface {
 

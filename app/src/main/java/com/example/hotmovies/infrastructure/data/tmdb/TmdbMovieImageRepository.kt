@@ -10,9 +10,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 import java.io.InputStream
+import javax.inject.Inject
 
-class TmdbMovieImageRepository(private val imageApiService: TmdbMovieImageApiInterface) :
+class TmdbMovieImageRepository @Inject constructor(private val imageApiService: TmdbMovieImageApiInterface) :
     MovieImageRepositoryInterface {
+
+    init {
+        println("******* ${this::class.simpleName}")
+    }
 
     override fun getImage(id: String): InputStream {
         checkNotMainThread()

@@ -11,6 +11,10 @@ class UserDetailsAction(
     private val movieDataRepository: MovieDataRepositoryInterface
 ) : BaseResultStateViewModelAction<Unit, User>() {
 
+    init {
+        println("******* ${this::class.simpleName}")
+    }
+
     override fun action(value: Unit): Flow<ResultState<User>> {
         return UserDetailsUseCase(movieDataRepository)()
     }
