@@ -2,7 +2,6 @@ package com.example.hotmovies.presentation.shared.helpers
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -12,7 +11,6 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 
-@Stable
 @Immutable
 interface CollapsibleHeaderConnectionInterface : NestedScrollConnection {
     val progress: Float

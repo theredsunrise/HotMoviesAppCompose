@@ -21,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,8 +43,6 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.hotmovies.R
 import com.example.hotmovies.presentation.theme.HotMoviesAppComposeTheme
 
-
-@Stable
 @Immutable
 data class CustomDialogState(val id: Any, val message: String)
 

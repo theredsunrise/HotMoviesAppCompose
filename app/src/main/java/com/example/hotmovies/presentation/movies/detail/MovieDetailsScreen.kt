@@ -19,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,8 +53,6 @@ import com.example.hotmovies.shared.ResultState
 import com.example.hotmovies.shared.checkMainThread
 import com.example.hotmovies.shared.progress
 
-
-@Stable
 @Immutable
 data class MovieDetailItem(val movieId: Int, val pageId: Int, val finalBackDropImageUrl: String) {
     val backDropTransitionKey: String = "BackDrop_${movieId}_${pageId}"

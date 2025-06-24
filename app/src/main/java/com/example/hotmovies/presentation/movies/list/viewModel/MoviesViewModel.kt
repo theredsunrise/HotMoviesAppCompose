@@ -2,7 +2,6 @@ package com.example.hotmovies.presentation.movies.list.viewModel
 
 import android.content.res.Resources
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -52,12 +51,10 @@ class MoviesViewModel @Inject constructor(
     movieDataRepository: MovieDataRepositoryInterface
 ) : ViewModel() {
 
-
-    @Stable
     @Immutable
     data class UIState(
         val userDetails: UserDetailsUIState,
-        var movieDetailAction: Event<Boolean>,
+        val movieDetailAction: Event<Boolean>,
         val userDetailsAction: Event<ResultState<Boolean>>,
         val logoutAction: Event<ResultState<Boolean>>
     ) {

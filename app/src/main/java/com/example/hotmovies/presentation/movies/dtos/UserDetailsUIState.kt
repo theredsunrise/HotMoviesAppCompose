@@ -2,13 +2,11 @@ package com.example.hotmovies.presentation.movies.dtos
 
 import android.content.res.Resources
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import com.example.hotmovies.R
 import com.example.hotmovies.domain.User
 
-@Stable
 @Immutable
 data class UserDetailsUIState(
     val name: String,

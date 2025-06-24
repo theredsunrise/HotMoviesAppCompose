@@ -1,7 +1,6 @@
 package com.example.hotmovies.presentation.login.viewModel.actions
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,7 +33,6 @@ class LoginViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    @Stable
     @Immutable
     data class UIState(
         val userNameText: UIControlState,

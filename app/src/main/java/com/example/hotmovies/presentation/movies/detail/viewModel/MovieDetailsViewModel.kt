@@ -1,7 +1,6 @@
 package com.example.hotmovies.presentation.movies.detail.viewModel
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hotmovies.appplication.movies.interfaces.MovieDataRepositoryInterface
@@ -30,7 +29,6 @@ class MovieDetailsViewModel @Inject constructor(
     imageIdToUrlMapper: MovieImageIdToUrlMapperInterface
 ) : ViewModel() {
 
-    @Stable
     @Immutable
     data class UIState(
         val movieDetails: MovieDetailsUIState,

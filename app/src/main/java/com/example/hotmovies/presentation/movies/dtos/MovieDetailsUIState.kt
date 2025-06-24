@@ -1,12 +1,10 @@
 package com.example.hotmovies.presentation.movies.dtos
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
 import com.example.hotmovies.appplication.movies.interfaces.MovieImageIdToUrlMapperInterface
 import com.example.hotmovies.domain.MovieDetails
 import com.example.hotmovies.shared.Event
 
-@Stable
 @Immutable
 class MovieDetailsUIState private constructor(
     val id: Int,

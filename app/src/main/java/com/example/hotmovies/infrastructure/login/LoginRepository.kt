@@ -8,7 +8,6 @@ import com.example.hotmovies.domain.LoginUserName
 import com.example.hotmovies.infrastructure.NetworkStatusResolver
 import com.example.hotmovies.shared.checkNotMainThread
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

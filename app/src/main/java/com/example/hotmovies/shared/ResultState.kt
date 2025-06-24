@@ -1,28 +1,23 @@
 package com.example.hotmovies.shared
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
-@Stable
 @Immutable
 sealed interface ResultState<out T> {
-    @Stable
+
     @Immutable
     data object None : ResultState<Nothing>
 
-    @Stable
     @Immutable
     data object Progress : ResultState<Nothing>
 
-    @Stable
     @Immutable
     data class Success<T>(val value: T) : ResultState<T>
 
-    @Stable
     @Immutable
     data class Failure(val exception: Exception) : ResultState<Nothing>
 

@@ -1,7 +1,6 @@
 package com.example.hotmovies.presentation.movies.dtos
 
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
 import androidx.paging.LoadState.Loading
 import androidx.paging.LoadStates
 import androidx.paging.PagingData
@@ -9,7 +8,6 @@ import com.example.hotmovies.appplication.movies.interfaces.MovieImageIdToUrlMap
 import com.example.hotmovies.domain.Movie
 import com.example.hotmovies.shared.Event
 
-@Stable
 @Immutable
 data class MovieUIState(
     val id: Int,
