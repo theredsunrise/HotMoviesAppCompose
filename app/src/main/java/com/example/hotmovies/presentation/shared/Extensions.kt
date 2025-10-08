@@ -77,7 +77,7 @@ fun Modifier.safeClickable(
         isEnabled,
         onClickLabel,
         role,
-        safeClickDecorator(onClick)
+        safeClickDecorator(onClick = onClick)
     )
     return this then clickableModifier
 }

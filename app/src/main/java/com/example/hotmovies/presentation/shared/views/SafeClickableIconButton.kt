@@ -18,7 +18,7 @@ fun SafeClickableIconButton(
     content: @Composable () -> Unit
 ) {
     IconButton(
-        safeClickDecorator(onClick),
+        safeClickDecorator(onClick = onClick),
         modifier,
         isEnabled,
         colors,
